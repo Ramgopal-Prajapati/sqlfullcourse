@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Master SQL with Ram Sir</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--bg:#0a0a0f;--bg2:#0f0f1a;--bg3:#13131f;--card:#16162a;--card2:#1c1c30;--border:#2a2a45;--accent:#00d4ff;--accent2:#7c3aed;--accent3:#f59e0b;--accent4:#10b981;--text:#e8e8f0;--text2:#9999bb;--text3:#6666aa;--red:#ef4444;--green:#22c55e;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.7;}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:3px;}
+#progress-bar{position:fixed;top:0;left:0;z-index:9999;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));width:0%;box-shadow:0 0 10px var(--accent);}
+nav{position:fixed;top:3px;left:0;right:0;z-index:999;background:rgba(10,10,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 clamp(1rem,4vw,3rem);display:flex;align-items:center;justify-content:space-between;height:64px;}
+.nav-logo{font-family:'Space Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--accent);}
+.nav-logo span{color:var(--accent3);}
+.nav-links{display:flex;gap:1.5rem;list-style:none;}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.2s;}
+.nav-links a:hover{color:var(--accent);}
+.nav-cta{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:0.45rem 1.2rem;border-radius:8px;text-decoration:none;font-size:0.82rem;font-weight:600;transition:opacity 0.2s;}
+.nav-cta:hover{opacity:0.85;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.hamburger span{width:24px;height:2px;background:var(--text);border-radius:2px;}
+.mobile-menu{display:none;position:fixed;top:67px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);padding:1.5rem;z-index:998;flex-direction:column;gap:1rem;}
+.mobile-menu a{color:var(--text2);text-decoration:none;font-size:0.95rem;padding:0.5rem 0;border-bottom:1px solid var(--border);display:block;}
+.mobile-menu.open{display:flex;}
+.hero{min-height:100vh;padding-top:64px;display:flex;align-items:center;position:relative;overflow:hidden;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(0,212,255,0.07) 0%,transparent 70%),radial-gradient(ellipse 60% 50% at 80% 100%,rgba(124,58,237,0.08) 0%,transparent 70%),var(--bg);}
+.hero-grid{position:absolute;inset:0;opacity:0.04;background-image:linear-gradient(var(--accent) 1px,transparent 1px),linear-gradient(90deg,var(--accent) 1px,transparent 1px);background-size:60px 60px;}
+.hero-content{max-width:1200px;margin:0 auto;padding:clamp(2rem,6vw,5rem) clamp(1rem,4vw,3rem);display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.25);color:var(--accent);padding:0.4rem 1rem;border-radius:50px;font-size:0.78rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem;}
+.hero-badge::before{content:'';width:7px;height:7px;background:var(--accent);border-radius:50%;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.hero h1{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800;line-height:1.1;margin-bottom:1.2rem;}
+.hero h1 .line1{display:block;color:var(--text);}
+.hero h1 .line2{display:block;color:var(--accent);font-family:'Space Mono',monospace;}
+.hero h1 .line3{display:block;color:var(--accent3);}
+.hero-sub{color:var(--text2);font-size:1.05rem;line-height:1.7;margin-bottom:2rem;}
+.hero-stats{display:flex;gap:2rem;margin-bottom:2.5rem;flex-wrap:wrap;}
+.stat-num{font-size:1.8rem;font-weight:800;color:var(--accent);font-family:'Space Mono',monospace;line-height:1;}
+.stat-label{font-size:0.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:0.85rem 2rem;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.95rem;display:inline-flex;align-items:center;gap:0.5rem;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 0 30px rgba(0,212,255,0.2);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(0,212,255,0.35);}
+.btn-secondary{background:transparent;border:1.5px solid var(--border);color:var(--text);padding:0.85rem 2rem;border-radius:10px;text-decoration:none;font-weight:600;font-size:0.95rem;display:inline-flex;align-items:center;gap:0.5rem;transition:border-color 0.2s,color 0.2s;}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
+.terminal{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.5),0 0 40px rgba(0,212,255,0.05);}
+.terminal-bar{background:var(--bg3);padding:0.8rem 1rem;display:flex;align-items:center;gap:0.5rem;border-bottom:1px solid var(--border);}
+.dot{width:12px;height:12px;border-radius:50%;}
+.dot.r{background:#ef4444}.dot.y{background:#eab308}.dot.g{background:#22c55e}
+.terminal-title{font-size:0.78rem;color:var(--text3);margin-left:0.5rem;font-family:'JetBrains Mono',monospace;}
+.terminal-body{padding:1.5rem;font-family:'JetBrains Mono',monospace;font-size:0.82rem;line-height:1.8;}
+.t-comment{color:#4b5563}.t-keyword{color:#60a5fa}.t-table{color:var(--accent3)}.t-string{color:#86efac}.t-number{color:var(--accent)}.t-output{color:var(--text2);border-top:1px solid var(--border);margin-top:1rem;padding-top:1rem;}.t-col{color:var(--accent3);font-weight:700;}
+.t-output-row{display:flex;gap:1.5rem;}
+.progress-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:3rem clamp(1rem,4vw,3rem);}
+.progress-section h2{text-align:center;font-size:1.5rem;margin-bottom:0.5rem;}
+.progress-section p{text-align:center;color:var(--text2);margin-bottom:2.5rem;font-size:0.9rem;}
+.chapter-progress-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;}
+.cp-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem;cursor:pointer;transition:border-color 0.2s;}
+.cp-item:hover{border-color:var(--accent);}
+.cp-item-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem;}
+.cp-num{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--text3);}
+.cp-pct{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--accent);font-weight:700;}
+.cp-name{font-size:0.82rem;font-weight:600;color:var(--text2);margin-bottom:0.7rem;}
+.cp-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.cp-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 1.5s ease;}
+.overall-progress{max-width:600px;margin:2rem auto 0;text-align:center;}
+.overall-label{display:flex;justify-content:space-between;font-size:0.82rem;color:var(--text2);margin-bottom:0.5rem;}
+.overall-bar{height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+.overall-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));width:0%;transition:width 2s ease;}
+section{padding:5rem clamp(1rem,4vw,3rem);}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-tag{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:0.8rem;}
+.section-tag::before{content:'//';color:var(--accent3);}
+h2.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.2;margin-bottom:1rem;}
+.section-desc{color:var(--text2);font-size:1rem;max-width:600px;}
+.chapters-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:3rem;}
+.chapter-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;transition:transform 0.2s,border-color 0.2s,box-shadow 0.2s;text-decoration:none;display:block;cursor:pointer;position:relative;overflow:hidden;}
+.chapter-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+.chapter-card:hover::before{transform:scaleX(1);}
+.chapter-card:hover{transform:translateY(-4px);border-color:rgba(0,212,255,0.3);box-shadow:0 20px 40px rgba(0,0,0,0.3);}
+.ch-num{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--text3);margin-bottom:0.5rem;}
+.ch-icon{font-size:2rem;margin-bottom:0.8rem;}
+.ch-title{font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;}
+.ch-desc{font-size:0.85rem;color:var(--text2);line-height:1.6;}
+.ch-topics{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem;}
+.ch-tag{background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.15);color:var(--accent);font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:4px;font-family:'JetBrains Mono',monospace;}
+.content-section{border-top:1px solid var(--border);}
+.chapter-header{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;margin-bottom:2.5rem;display:flex;align-items:flex-start;gap:1.5rem;}
+.ch-icon-big{font-size:3rem;flex-shrink:0;}
+.chapter-num-label{font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--text3);margin-bottom:0.3rem;}
+.chapter-main-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;margin-bottom:0.5rem;}
+.chapter-subtitle{color:var(--text2);font-size:0.95rem;}
+.def-box{background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.2);border-left:4px solid var(--accent);border-radius:0 12px 12px 0;padding:1.5rem;margin:1.5rem 0;}
+.def-box h4{color:var(--accent);font-size:0.78rem;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:0.5rem;font-family:'Space Mono',monospace;}
+.def-box p{color:var(--text);line-height:1.7;}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:1.5rem 0;}
+.info-card h4{font-size:1rem;font-weight:700;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;}
+.code-wrap{margin:1.5rem 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);}
+.code-bar{background:var(--bg3);padding:0.7rem 1rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
+.code-lang{font-size:0.72rem;color:var(--text3);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:1px;}
+.copy-btn{background:transparent;border:1px solid var(--border);color:var(--text3);font-size:0.72rem;padding:0.25rem 0.6rem;border-radius:5px;cursor:pointer;font-family:'JetBrains Mono',monospace;transition:all 0.2s;}
+.copy-btn:hover{border-color:var(--accent);color:var(--accent);}
+pre{background:var(--card);padding:1.5rem;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:0.83rem;line-height:1.7;color:var(--text);}
+.kw{color:#60a5fa}.tb{color:var(--accent3)}.st{color:#86efac}.nm{color:#f9a8d4}.cm{color:#4b5563;font-style:italic}.fn{color:var(--accent)}.op{color:#c084fc}
+.output-wrap{margin:1rem 0 1.5rem;border-radius:12px;overflow:hidden;border:1px solid var(--accent4);}
+.output-bar{background:rgba(16,185,129,0.1);padding:0.5rem 1rem;border-bottom:1px solid var(--accent4);}
+.output-label{font-size:0.72rem;color:var(--accent4);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;gap:0.4rem;}
+.output-body{background:var(--card2);padding:1rem;overflow-x:auto;}
+.sql-table{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:0.82rem;}
+.sql-table th{background:rgba(0,212,255,0.1);color:var(--accent);padding:0.5rem 1rem;text-align:left;border:1px solid var(--border);font-size:0.75rem;text-transform:uppercase;}
+.sql-table td{padding:0.4rem 1rem;border:1px solid var(--border);color:var(--text2);}
+.sql-table tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:1.5rem 0;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:1.5rem 0;}
+.feat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.2rem;transition:border-color 0.2s;}
+.feat-card:hover{border-color:rgba(0,212,255,0.3);}
+.feat-card .icon{font-size:1.5rem;margin-bottom:0.6rem;}
+.feat-card h4{font-size:0.9rem;font-weight:700;margin-bottom:0.4rem;}
+.feat-card p{font-size:0.82rem;color:var(--text2);}
+h3.sub-heading{font-size:1.2rem;font-weight:700;margin:2rem 0 1rem;display:flex;align-items:center;gap:0.5rem;}
+h3.sub-heading::before{content:'';width:4px;height:1.2em;background:linear-gradient(var(--accent),var(--accent2));border-radius:2px;flex-shrink:0;}
+p.para{color:var(--text2);line-height:1.8;margin:0.8rem 0;}
+ul.list{margin:0.8rem 0 0.8rem 1.5rem;}
+ul.list li{color:var(--text2);line-height:1.8;margin-bottom:0.3rem;}
+ul.list li::marker{color:var(--accent);}
+.dtype-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin:1.5rem 0;}
+.dtype-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;transition:border-color 0.2s;}
+.dtype-card:hover{border-color:var(--accent3);}
+.dtype-name{font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:700;color:var(--accent3);margin-bottom:0.3rem;}
+.dtype-desc{font-size:0.73rem;color:var(--text3);}
+.dtype-ex{font-size:0.72rem;color:var(--accent4);margin-top:0.2rem;font-family:'JetBrains Mono',monospace;}
+.constraint-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem;margin:1.5rem 0;}
+.constraint-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.2rem;border-left:3px solid var(--accent2);}
+.constraint-card h4{color:var(--accent2);font-family:'JetBrains Mono',monospace;font-size:0.85rem;margin-bottom:0.5rem;}
+.constraint-card p{font-size:0.83rem;color:var(--text2);}
+.join-types{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.5rem;margin:1.5rem 0;}
+.join-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.3rem;transition:all 0.2s;}
+.join-card:hover{border-color:var(--accent);}
+.join-diagram{width:100%;height:80px;margin:0.8rem 0;}
+.join-card h4{font-size:1rem;font-weight:700;margin-bottom:0.4rem;}
+.join-card p{font-size:0.82rem;color:var(--text2);margin-bottom:0.5rem;}
+.join-card code{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--accent3);}
+.subquery-visual{background:var(--card2);border:1px solid var(--border);border-radius:16px;padding:2rem;margin:1.5rem 0;}
+.sq-outer{background:rgba(124,58,237,0.1);border:2px solid var(--accent2);border-radius:10px;padding:1.2rem;position:relative;}
+.sq-label{display:inline-block;background:var(--accent2);color:#fff;font-size:0.68rem;font-weight:700;padding:0.15rem 0.6rem;border-radius:4px;letter-spacing:1px;margin-bottom:0.6rem;}
+.sq-inner{background:rgba(0,212,255,0.1);border:2px solid var(--accent);border-radius:8px;padding:1rem;position:relative;margin-top:1rem;}
+.sq-inner .sq-label{background:var(--accent);color:var(--bg);}
+.sq-arrow{text-align:center;color:var(--accent3);font-size:0.85rem;padding:0.4rem;}
+.tcl-flow{display:flex;align-items:center;gap:0;margin:2rem 0;overflow-x:auto;padding:1rem 0;}
+.tcl-step{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1.1rem;text-align:center;flex:1;min-width:90px;}
+.tcl-step.commit{border-color:var(--green);}.tcl-step.rollback{border-color:var(--red);}.tcl-step.savepoint{border-color:var(--accent3);}
+.tcl-step-icon{font-size:1.3rem;margin-bottom:0.3rem;}
+.tcl-step-name{font-family:'JetBrains Mono',monospace;font-size:0.7rem;font-weight:700;color:var(--text2);}
+.tcl-arrow{color:var(--text3);font-size:0.9rem;padding:0 0.3rem;flex-shrink:0;}
+.alert{border-radius:10px;padding:1rem 1.2rem;margin:1rem 0;display:flex;gap:0.8rem;align-items:flex-start;}
+.alert.tip{background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);}
+.alert.warn{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);}
+.alert.info{background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.25);}
+.alert p{font-size:0.85rem;color:var(--text2);line-height:1.6;}
+.alert p strong{color:var(--text);}
+.alert p code{font-family:'JetBrains Mono',monospace;color:var(--accent3);font-size:0.85em;}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;margin-top:3rem;}
+.why-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:all 0.2s;position:relative;overflow:hidden;}
+.why-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transform:scaleX(0);transform-origin:left;transition:transform 0.3s;}
+.why-card:hover::after{transform:scaleX(1);}
+.why-card:hover{border-color:rgba(0,212,255,0.2);transform:translateY(-3px);}
+.why-icon{font-size:2.5rem;margin-bottom:1rem;}
+.why-card h3{font-size:1.1rem;font-weight:700;margin-bottom:0.6rem;}
+.why-card p{font-size:0.88rem;color:var(--text2);line-height:1.7;}
+.trainer-wrap{display:grid;grid-template-columns:1fr 2fr;gap:4rem;align-items:start;margin-top:3rem;}
+.avatar-ring{width:220px;height:220px;border-radius:50%;margin:0 auto;background:linear-gradient(135deg,var(--accent),var(--accent2));padding:3px;box-shadow:0 0 60px rgba(0,212,255,0.2);}
+.avatar-inner{width:100%;height:100%;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:5rem;}
+.trainer-name{font-size:1.8rem;font-weight:800;margin-bottom:0.3rem;text-align:center;margin-top:1rem;}
+.trainer-title{color:var(--accent);font-size:0.85rem;font-family:'Space Mono',monospace;text-align:center;margin-bottom:1rem;}
+.trainer-bio{color:var(--text2);line-height:1.8;margin-bottom:1rem;}
+.trainer-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0;}
+.tr-stat{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;}
+.tr-stat-num{font-size:1.6rem;font-weight:800;color:var(--accent);font-family:'Space Mono',monospace;}
+.tr-stat-label{font-size:0.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.5px;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.skill-tag{background:rgba(124,58,237,0.12);border:1px solid rgba(124,58,237,0.25);color:#a78bfa;font-size:0.78rem;padding:0.3rem 0.8rem;border-radius:6px;font-family:'JetBrains Mono',monospace;}
+.plan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:3rem;}
+.plan-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:all 0.2s;position:relative;}
+.plan-card.featured{border-color:var(--accent);background:linear-gradient(135deg,rgba(0,212,255,0.05),rgba(124,58,237,0.05));}
+.plan-badge{position:absolute;top:-10px;right:20px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:0.7rem;font-weight:700;padding:0.2rem 0.8rem;border-radius:20px;text-transform:uppercase;letter-spacing:1px;}
+.plan-price{font-size:2.5rem;font-weight:800;font-family:'Space Mono',monospace;margin:1rem 0;}
+.plan-price span{font-size:1rem;color:var(--text3);font-family:'Sora',sans-serif;font-weight:400;}
+.plan-name{font-size:1.2rem;font-weight:700;margin-bottom:0.5rem;}
+.plan-desc{font-size:0.85rem;color:var(--text2);margin-bottom:1.5rem;}
+.plan-features{list-style:none;margin-bottom:2rem;}
+.plan-features li{display:flex;align-items:flex-start;gap:0.6rem;font-size:0.87rem;color:var(--text2);margin-bottom:0.6rem;}
+.plan-features li::before{content:'✓';color:var(--accent4);font-weight:700;flex-shrink:0;}
+.plan-btn{display:block;text-align:center;padding:0.85rem;border-radius:10px;font-weight:700;font-size:0.9rem;text-decoration:none;transition:all 0.2s;}
+.plan-btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;}
+.plan-btn.outline{border:1.5px solid var(--border);color:var(--text);}
+.plan-btn:hover{transform:translateY(-2px);opacity:0.9;}
+.contact-wrap{max-width:600px;margin:3rem auto 0;}
+.whatsapp-big{background:linear-gradient(135deg,#25D366,#128C7E);border-radius:16px;padding:2rem;text-align:center;margin-bottom:2rem;box-shadow:0 0 40px rgba(37,211,102,0.2);}
+.whatsapp-big a{color:#fff;text-decoration:none;font-size:1.3rem;font-weight:700;display:flex;align-items:center;justify-content:center;gap:0.8rem;}
+.whatsapp-big p{color:rgba(255,255,255,0.8);font-size:0.85rem;margin-top:0.5rem;}
+.form-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;}
+.form-card h3{font-size:1.3rem;font-weight:700;margin-bottom:1.5rem;}
+.form-group{margin-bottom:1.2rem;}
+.form-group label{display:block;font-size:0.82rem;color:var(--text2);margin-bottom:0.4rem;font-weight:500;}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:0.75rem 1rem;color:var(--text);font-family:'Sora',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent);}
+.form-group textarea{height:100px;resize:vertical;}
+.form-group select option{background:var(--bg3);}
+.submit-btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:10px;padding:0.9rem;font-size:0.95rem;font-weight:700;cursor:pointer;transition:opacity 0.2s;font-family:'Sora',sans-serif;}
+.submit-btn:hover{opacity:0.88;}
+.form-success{display:none;background:rgba(16,185,129,0.1);border:1px solid var(--accent4);border-radius:10px;padding:1.5rem;text-align:center;margin-top:1rem;}
+.form-success p{color:var(--accent4);font-weight:600;}
+footer{background:var(--bg3);border-top:1px solid var(--border);padding:3rem clamp(1rem,4vw,3rem) 1.5rem;}
+.footer-inner{max-width:1100px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem;}
+.footer-brand p{color:var(--text3);font-size:0.85rem;line-height:1.7;margin:1rem 0;}
+.footer-logo{font-family:'Space Mono',monospace;font-size:1.2rem;font-weight:700;color:var(--accent);}
+.footer-logo span{color:var(--accent3);}
+.footer-col h4{font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:1rem;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:0.5rem;}
+.footer-col ul li a{color:var(--text3);text-decoration:none;font-size:0.85rem;transition:color 0.2s;}
+.footer-col ul li a:hover{color:var(--accent);}
+.social-links{display:flex;gap:0.7rem;margin-top:1rem;}
+.social-link{width:38px;height:38px;border-radius:8px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text3);text-decoration:none;font-size:1rem;transition:all 0.2s;}
+.social-link:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+.footer-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-bottom p{color:var(--text3);font-size:0.82rem;}
+.footer-goal{background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.15);border-radius:8px;padding:0.8rem 1.2rem;font-size:0.82rem;color:var(--text2);font-style:italic;margin-top:1rem;}
+.social-links-center{justify-content:center;}
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+@media(max-width:768px){
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  .hero-content{grid-template-columns:1fr;gap:2rem;}
+  .hero-visual{display:none;}
+  .trainer-wrap{grid-template-columns:1fr;gap:2rem;}
+  .grid-2,.grid-3{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr;gap:2rem;}
+  .tcl-flow{flex-direction:column;align-items:stretch;}
+  .chapter-header{flex-direction:column;gap:0.8rem;}
+  .trainer-stats{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:480px){
+  .hero-stats{gap:1.2rem;}
+  pre{font-size:0.74rem;padding:1rem;}
+  .plan-grid{grid-template-columns:1fr;}
+  .join-types{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SQL<span>.</span>RamSir</div>
+  <ul class="nav-links">
+    <li><a href="#chapters">Chapters</a></li>
+    <li><a href="#content-ch1">Learn</a></li>
+    <li><a href="#why">Why Choose</a></li>
+    <li><a href="#trainer">Trainer</a></li>
+    <li><a href="#course">Course</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/919753528324" class="nav-cta" target="_blank"><i class="fab fa-whatsapp"></i> Enroll Now</a>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#chapters" onclick="toggleMenu()">📚 Chapters</a>
+  <a href="#why" onclick="toggleMenu()">⭐ Why Choose</a>
+  <a href="#trainer" onclick="toggleMenu()">👤 Trainer</a>
+  <a href="#course" onclick="toggleMenu()">💎 Course Plans</a>
+  <a href="#contact" onclick="toggleMenu()">📩 Contact</a>
+  <a href="https://wa.me/919753528324" target="_blank" style="color:#25D366">💬 WhatsApp: 9753528324</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-badge">Complete SQL Mastery Course</div>
+      <h1>
+        <span class="line1">Master SQL</span>
+        <span class="line2">with Ram Sir</span>
+        <span class="line3">From Zero to Pro 🚀</span>
+      </h1>
+      <p class="hero-sub">Learn SQL from absolute basics to advanced concepts — databases, queries, joins, subqueries, transactions and access control. Taught by Ram Sir with real-world examples and 100+ working code samples.</p>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">8+</div><div class="stat-label">Chapters</div></div>
+        <div class="stat"><div class="stat-num">100+</div><div class="stat-label">Code Examples</div></div>
+        <div class="stat"><div class="stat-num">1:1</div><div class="stat-label">Sessions</div></div>
+        <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Support</div></div>
+      </div>
+      <div class="hero-btns">
+        <a href="#content-ch1" class="btn-primary"><i class="fas fa-play"></i> Start Learning Free</a>
+        <a href="https://wa.me/919753528324" class="btn-secondary" target="_blank"><i class="fab fa-whatsapp"></i> Enroll on WhatsApp</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+          <span class="terminal-title">mysql — ram_sir_db</span>
+        </div>
+        <div class="terminal-body">
+          <div><span class="t-comment">-- Master SQL with Ram Sir 🎓</span></div>
+          <div><span class="t-keyword">SELECT</span> emp_name, salary, department</div>
+          <div><span class="t-keyword">FROM</span> <span class="t-table">employees</span></div>
+          <div><span class="t-keyword">WHERE</span> salary &gt; (</div>
+          <div>&nbsp;&nbsp;<span class="t-keyword">SELECT</span> <span style="color:var(--accent)">AVG</span>(salary)</div>
+          <div>&nbsp;&nbsp;<span class="t-keyword">FROM</span> <span class="t-table">employees</span>)</div>
+          <div><span class="t-keyword">ORDER BY</span> salary <span class="t-keyword">DESC</span>;</div>
+          <div class="t-output">
+            <div style="color:#4b5563;font-size:0.73rem;margin-bottom:0.4rem">▶ Result — 3 rows in set</div>
+            <div class="t-output-row"><span class="t-col">name</span><span class="t-col">salary</span><span class="t-col">dept</span></div>
+            <div class="t-output-row"><span>Asha</span><span class="t-number">90000</span><span style="color:#60a5fa">Marketing</span></div>
+            <div class="t-output-row"><span>Priya</span><span class="t-number">70000</span><span style="color:#60a5fa">HR</span></div>
+            <div class="t-output-row"><span>Karan</span><span class="t-number">70000</span><span style="color:#60a5fa">HR</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+  <h2>📊 Course Progress Tracker</h2>
+  <p>Track your learning journey — click any chapter to jump to it</p>
+  <div class="chapter-progress-grid" id="chapterProgress"></div>
+  <div class="overall-progress">
+    <div class="overall-label"><span>Overall Course Content Coverage</span><span id="overallPct">0%</span></div>
+    <div class="overall-bar"><div class="overall-fill" id="overallFill"></div></div>
+  </div>
+</div>
+
+<!-- CHAPTERS OVERVIEW -->
+<section id="chapters" style="background:var(--bg)">
+  <div class="section-inner">
+    <div class="section-tag fade-up">Course Structure</div>
+    <h2 class="section-title fade-up">All 8 Chapters</h2>
+    <p class="section-desc fade-up">A complete roadmap from database fundamentals to advanced SQL — structured for maximum clarity and retention.</p>
+    <div class="chapters-grid">
+      <div class="chapter-card fade-up" onclick="document.getElementById('content-ch1').scrollIntoView({behavior:'smooth'})">
+        <div class="ch-num">CHAPTER 01</div><div class="ch-icon">🗄️</div>
+        <div class="ch-title">Introduction to Databases & SQL</div>
+        <div class="ch-desc">Data, information, databases, DBMS, SQL vs NoSQL. Your complete foundation.</div>
+        <div class="ch-topics"><span class="ch-tag">Data</span><span class="ch-tag">DBMS</span><span class="ch-tag">MySQL</span><span class="ch-tag">NoSQL</span></div>
+      </div>
+      <div class="chapter-card fade-up" onclick="document.getElementById('content-ch2').scrollIntoView({behavior:'smooth'})">
+        <div class="ch-num">CHAPTER 02</div><div class="ch-icon">📋</div>
+        <div class="ch-title">Data Types & Constraints</div>
+        <div class="ch-desc">All SQL data types. PRIMARY KEY, FOREIGN KEY, CHECK, UNIQUE, NOT NULL, DEFAULT.</div>
+        <div class="ch-topics"><span class="ch-tag">INT</span><span class="ch-tag">VARCHAR</span><span class="ch-tag">PK</span><span class="ch-tag">FK</span></div>
+      </div>
+      <div class="chapter-card fade-up" onclick="document.getElementById('content-ch3').scrollIntoView({behavior:'smooth'})">
+        <div class="ch-num">CHAPTER 03</div><div class="ch-icon">🔧</div>
+        <div class="ch-title">Operators & WHERE Clause</div>
+        <div class="ch-desc">Arithmetic, comparison, logical operators. WHERE, BETWEEN, IN, LIKE, IS NULL.</div>
+        <div class="ch-topics"><span class="ch-tag">WHERE</span><span class="ch-tag">LIKE</span><span class="ch-tag">BETWEEN</span><span class="ch-tag">IN</span></div>
+      </div>
+      <div class="chapter-card fade-up" onclick="document.getElementById('content-ch4').scrollIntoView({behavior:'smooth'})">
+        <div class="ch-num">CHAPTER 04</div><div class="ch-icon">📊</div>
+        <div class="ch-title">Aggregate Functions & GROUP BY</div>
+        <div class="ch-desc">COUNT, SUM, AVG, MIN, MAX. GROUP BY and HAVING for data analysis.</div>
+        <div class="ch-topics"><span class="ch-tag">COUNT</span><span class="ch-tag">AVG</span><span class="ch-tag">GROUP BY</span><span class="ch-tag">HAVING</span></div>
+      </div>
+      <div class="chapter-card fade-up" onclick="document.getElementById('content-ch5').scrollIntoView({behavior:'smooth'})">
+        <div class="ch-num">CHAPTER 05</div><div class="ch-icon">⚙️</div>
+        <div class="ch-title">DML, DDL & DQL Commands</div>
+        <div class="ch-desc">INSERT, UPDATE, DELETE (DML) | CREATE, ALTER, DROP (DDL) | SELECT (DQL).</div>
+        <div class="ch-topics"><span class="ch-tag">INSERT</span><span class="ch-tag">UPDATE</span><span class="ch-tag">ALTER</span><span class="ch-tag">DROP</span></div>
+      </div>
+      <div class="chapter-card fade-up" onclick="document.getElementById('content-ch6').scrollIntoView({behavior:'smooth'})">
+        <div class="ch-num">CHAPTER 06</div><div class="ch-icon">🔗</div>
+        <div class="ch-title">SQL Joins (with Venn Diagrams)</div>
+        <div class="ch-desc">INNER, LEFT, RIGHT, FULL, CROSS, SELF joins — visually explained with outputs.</div>
+        <div class="ch-topics"><span class="ch-tag">INNER</span><span class="ch-tag">LEFT</span><span class="ch-tag">RIGHT</span><span class="ch-tag">FULL</span></div>
+      </div>
+      <div class="chapter-card fade-up" onclick="document.getElementById('content-ch7').scrollIntoView({behavior:'smooth'})">
+        <div class="ch-num">CHAPTER 07</div><div class="ch-icon">🧩</div>
+        <div class="ch-title">Subqueries (Nested Queries)</div>
+        <div class="ch-desc">Single-row, multi-row, correlated, scalar subqueries with parent-child visualization.</div>
+        <div class="ch-topics"><span class="ch-tag">Subquery</span><span class="ch-tag">Correlated</span><span class="ch-tag">Scalar</span></div>
+      </div>
+      <div class="chapter-card fade-up" onclick="document.getElementById('content-ch8').scrollIntoView({behavior:'smooth'})">
+        <div class="ch-num">CHAPTER 08</div><div class="ch-icon">🔐</div>
+        <div class="ch-title">TCL & DCL Commands</div>
+        <div class="ch-desc">COMMIT, ROLLBACK, SAVEPOINT for transactions. GRANT & REVOKE for access control.</div>
+        <div class="ch-topics"><span class="ch-tag">COMMIT</span><span class="ch-tag">ROLLBACK</span><span class="ch-tag">GRANT</span><span class="ch-tag">REVOKE</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CHAPTER 1 ===== -->
+<section class="content-section" id="content-ch1" style="background:var(--bg2)">
+<div class="section-inner">
+  <div class="chapter-header fade-up">
+    <div class="ch-icon-big">🗄️</div>
+    <div>
+      <div class="chapter-num-label">CHAPTER 01</div>
+      <div class="chapter-main-title">Introduction to Databases & SQL</div>
+      <div class="chapter-subtitle">Understand what data, information, databases and DBMS are — the foundation of everything</div>
+    </div>
+  </div>
+
+  <h3 class="sub-heading fade-up">What is Data?</h3>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p><strong>Data</strong> is raw, unprocessed facts and figures. Every single recorded value — a number, a name, a date — is data. By itself, data has no meaning without context.</p>
+  </div>
+  <p class="para fade-up">Think of data like raw ingredients: flour, sugar, eggs. On their own, they're just raw materials with no particular meaning. Data works the same way.</p>
+  <div class="grid-3 fade-up">
+    <div class="feat-card"><div class="icon">🔢</div><h4>Numeric Data</h4><p>25, 60000, 9753528324 — raw numbers with no context</p></div>
+    <div class="feat-card"><div class="icon">🔤</div><h4>Text Data</h4><p>"Ram", "Delhi", "Python" — raw string values</p></div>
+    <div class="feat-card"><div class="icon">📅</div><h4>Date/Time Data</h4><p>"2024-06-21", "09:30:23" — raw timestamp values</p></div>
+  </div>
+
+  <h3 class="sub-heading fade-up">What is Information?</h3>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p><strong>Information</strong> is processed, organized data that has meaning and is useful for decision-making. When raw data is given context, it becomes information.</p>
+  </div>
+  <div class="alert info fade-up">
+    <span>💡</span>
+    <p><strong>Example:</strong> "25" is just data. But "Ram Sir is 25 years old, earns ₹60,000/month and lives in Bhopal" — that's <em>information</em>. The same values now have context and meaning.</p>
+  </div>
+
+  <h3 class="sub-heading fade-up">What is a Database?</h3>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p>A <strong>Database</strong> is an organized, structured collection of related data stored in a system. It is the place where we <strong>store, manage, and retrieve</strong> data and perform CRUD operations — Create, Read, Update, Delete.</p>
+  </div>
+  <div class="grid-2 fade-up">
+    <div class="info-card">
+      <h4>🏦 Real-World Example</h4>
+      <p style="color:var(--text2);font-size:0.88rem;line-height:1.8">A bank database stores: customer names, account numbers, balances, transaction history, branch locations. All organized so it can be retrieved and updated instantly — millions of records, milliseconds of response time.</p>
+    </div>
+    <div class="info-card">
+      <h4>⚡ CRUD Operations</h4>
+      <ul class="list" style="margin:0">
+        <li><strong style="color:var(--accent)">C</strong>reate — INSERT new records into tables</li>
+        <li><strong style="color:var(--accent)">R</strong>ead — SELECT and retrieve records</li>
+        <li><strong style="color:var(--accent)">U</strong>pdate — UPDATE existing records</li>
+        <li><strong style="color:var(--accent)">D</strong>elete — DELETE records from tables</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sub-heading fade-up">What is DBMS?</h3>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p>A <strong>DBMS (Database Management System)</strong> is software that provides tools to create, manage, and access databases digitally. It acts as the bridge between the user/application and the actual stored data.</p>
+  </div>
+  <div class="alert tip fade-up">
+    <span>✅</span>
+    <p><strong>Analogy:</strong> A library has thousands of books (Data). The building is the Database. The librarian + catalog system is the DBMS — it knows exactly where every book is, controls who can access what, and manages additions and removals efficiently.</p>
+  </div>
+
+  <h3 class="sub-heading fade-up">Two Types of Databases</h3>
+  <div class="grid-2 fade-up">
+    <div class="info-card" style="border-color:rgba(0,212,255,0.35)">
+      <h4>🗃️ Relational Database — SQL</h4>
+      <p style="color:var(--text2);font-size:0.88rem;line-height:1.8;margin-bottom:0.8rem">Stores data in <strong>rows and columns</strong> like an Excel spreadsheet. Tables are linked through keys. Data is highly structured and follows a defined schema.</p>
+      <p style="font-size:0.82rem;color:var(--accent)">📦 Tool: <strong>MySQL Workbench</strong></p>
+      <p style="font-size:0.8rem;color:var(--text3);margin-top:0.3rem">Examples: MySQL, PostgreSQL, Oracle, SQL Server</p>
+    </div>
+    <div class="info-card" style="border-color:rgba(245,158,11,0.35)">
+      <h4>📄 Non-Relational Database — NoSQL</h4>
+      <p style="color:var(--text2);font-size:0.88rem;line-height:1.8;margin-bottom:0.8rem">Stores data as <strong>documents, objects, or key-value pairs</strong> — like JSON. Flexible schema, great for unstructured or rapidly changing data.</p>
+      <p style="font-size:0.82rem;color:var(--accent3)">📦 Tool: <strong>MongoDB</strong></p>
+      <p style="font-size:0.8rem;color:var(--text3);margin-top:0.3rem">Examples: MongoDB, Firebase, Cassandra, Redis</p>
+    </div>
+  </div>
+
+  <h3 class="sub-heading fade-up">What is SQL?</h3>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p><strong>SQL (Structured Query Language)</strong> is a standard query language used to interact with relational databases. It allows creating tables, inserting data, retrieving information, updating records, and deleting data — all using simple English-like commands.</p>
+  </div>
+
+  <h3 class="sub-heading fade-up">Creating Your First Database & Table</h3>
+  <div class="code-wrap fade-up">
+    <div class="code-bar"><span class="code-lang">SQL — MySQL Workbench</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="cm">-- Step 1: Create a new database</span>
+<span class="kw">CREATE DATABASE</span> <span class="tb">school_db</span>;
+
+<span class="cm">-- Step 2: Select the database to work in</span>
+<span class="kw">USE</span> <span class="tb">school_db</span>;
+
+<span class="cm">-- Step 3: Create a table with columns</span>
+<span class="kw">CREATE TABLE</span> <span class="tb">students</span> (
+    id    <span class="fn">INT</span>,
+    name  <span class="fn">VARCHAR</span>(<span class="nm">50</span>),
+    age   <span class="fn">INT</span>,
+    city  <span class="fn">VARCHAR</span>(<span class="nm">30</span>)
+);
+
+<span class="cm">-- Step 4: Insert data into the table</span>
+<span class="kw">INSERT INTO</span> <span class="tb">students</span> <span class="kw">VALUES</span>
+(<span class="nm">1</span>, <span class="st">'Amit'</span>,  <span class="nm">20</span>, <span class="st">'Delhi'</span>),
+(<span class="nm">2</span>, <span class="st">'Priya'</span>, <span class="nm">22</span>, <span class="st">'Mumbai'</span>),
+(<span class="nm">3</span>, <span class="st">'Ram'</span>,   <span class="nm">21</span>, <span class="st">'Bhopal'</span>);
+
+<span class="cm">-- Step 5: View all records</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">students</span>;
+
+<span class="cm">-- Step 6: Delete database if needed</span>
+<span class="kw">DROP DATABASE</span> <span class="tb">school_db</span>;</pre>
+  </div>
+  <div class="output-wrap fade-up">
+    <div class="output-bar"><div class="output-label"><i class="fas fa-check-circle"></i> Output — SELECT * FROM students</div></div>
+    <div class="output-body">
+      <table class="sql-table">
+        <tr><th>id</th><th>name</th><th>age</th><th>city</th></tr>
+        <tr><td>1</td><td>Amit</td><td>20</td><td>Delhi</td></tr>
+        <tr><td>2</td><td>Priya</td><td>22</td><td>Mumbai</td></tr>
+        <tr><td>3</td><td>Ram</td><td>21</td><td>Bhopal</td></tr>
+      </table>
+      <p style="font-size:0.75rem;color:var(--accent4);margin-top:0.5rem">✓ 3 rows returned in 0.001 sec</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== CHAPTER 2 ===== -->
+<section class="content-section" id="content-ch2" style="background:var(--bg)">
+<div class="section-inner">
+  <div class="chapter-header fade-up">
+    <div class="ch-icon-big">📋</div>
+    <div>
+      <div class="chapter-num-label">CHAPTER 02</div>
+      <div class="chapter-main-title">Data Types & Constraints</div>
+      <div class="chapter-subtitle">Define what values columns store and enforce rules that protect data integrity</div>
+    </div>
+  </div>
+
+  <h3 class="sub-heading fade-up">SQL Data Types</h3>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p>A <strong>Data Type</strong> in SQL defines what kind of value a column can store — integers, text, dates, booleans, etc. Choosing the correct data type ensures data integrity, optimizes storage, and prevents invalid entries.</p>
+  </div>
+  <div class="dtype-grid fade-up">
+    <div class="dtype-card"><div class="dtype-name">INT</div><div class="dtype-desc">Whole numbers</div><div class="dtype-ex">1, 25, 1000</div></div>
+    <div class="dtype-card"><div class="dtype-name">TINYINT</div><div class="dtype-desc">Small integer</div><div class="dtype-ex">age: 25</div></div>
+    <div class="dtype-card"><div class="dtype-name">VARCHAR(n)</div><div class="dtype-desc">Variable text</div><div class="dtype-ex">"Ram", "Delhi"</div></div>
+    <div class="dtype-card"><div class="dtype-name">TEXT</div><div class="dtype-desc">Long text</div><div class="dtype-ex">email content</div></div>
+    <div class="dtype-card"><div class="dtype-name">LONGTEXT</div><div class="dtype-desc">Very long text</div><div class="dtype-ex">biography</div></div>
+    <div class="dtype-card"><div class="dtype-name">CHAR(n)</div><div class="dtype-desc">Fixed length</div><div class="dtype-ex">gender: 'M'</div></div>
+    <div class="dtype-card"><div class="dtype-name">DECIMAL(p,s)</div><div class="dtype-desc">Exact decimals</div><div class="dtype-ex">55000.35</div></div>
+    <div class="dtype-card"><div class="dtype-name">FLOAT</div><div class="dtype-desc">Approx decimal</div><div class="dtype-ex">rating: 4.7</div></div>
+    <div class="dtype-card"><div class="dtype-name">DOUBLE</div><div class="dtype-desc">High precision</div><div class="dtype-ex">87.3456789</div></div>
+    <div class="dtype-card"><div class="dtype-name">DATE</div><div class="dtype-desc">Date only</div><div class="dtype-ex">2024-06-21</div></div>
+    <div class="dtype-card"><div class="dtype-name">TIME</div><div class="dtype-desc">Time only</div><div class="dtype-ex">09:30:23</div></div>
+    <div class="dtype-card"><div class="dtype-name">DATETIME</div><div class="dtype-desc">Date + Time</div><div class="dtype-ex">2025-06-21 09:45</div></div>
+    <div class="dtype-card"><div class="dtype-name">BOOLEAN</div><div class="dtype-desc">True / False</div><div class="dtype-ex">True, False</div></div>
+    <div class="dtype-card"><div class="dtype-name">BLOB</div><div class="dtype-desc">Binary data</div><div class="dtype-ex">images, files</div></div>
+  </div>
+
+  <div class="code-wrap fade-up">
+    <div class="code-bar"><span class="code-lang">SQL — All Data Types Table</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="kw">CREATE TABLE</span> <span class="tb">sample_datatypes</span> (
+    id              <span class="fn">INT</span>,
+    name            <span class="fn">VARCHAR</span>(<span class="nm">50</span>),
+    email           <span class="fn">TEXT</span>,
+    age             <span class="fn">TINYINT</span>,
+    salary          <span class="fn">DECIMAL</span>(<span class="nm">10</span>,<span class="nm">2</span>),
+    join_date       <span class="fn">DATE</span>,
+    login_time      <span class="fn">TIME</span>,
+    last_login      <span class="fn">DATETIME</span>,
+    is_active       <span class="fn">BOOLEAN</span>,
+    profile_picture <span class="fn">BLOB</span>,
+    gender          <span class="fn">CHAR</span>(<span class="nm">1</span>),
+    rating          <span class="fn">FLOAT</span>,
+    score           <span class="fn">DOUBLE</span>,
+    bio             <span class="fn">LONGTEXT</span>
+);
+
+<span class="kw">INSERT INTO</span> <span class="tb">sample_datatypes</span> <span class="kw">VALUES</span> (
+    <span class="nm">1</span>, <span class="st">'Ram Gopal'</span>, <span class="st">'ram@gmail.com'</span>, <span class="nm">25</span>,
+    <span class="nm">55000.35</span>, <span class="st">'2024-06-21'</span>, <span class="st">'09:30:23'</span>,
+    <span class="st">'2025-06-21 09:45:23'</span>, <span class="kw">True</span>, NULL,
+    <span class="st">'M'</span>, <span class="nm">4.7</span>, <span class="nm">87.345</span>,
+    <span class="st">'Technical Trainer at Symyak Classes'</span>
+);</pre>
+  </div>
+
+  <h3 class="sub-heading fade-up">SQL Constraints</h3>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p><strong>Constraints</strong> are rules assigned to table columns that restrict what data can be inserted. They maintain data integrity and prevent invalid or inconsistent records from entering the database.</p>
+  </div>
+  <div class="constraint-wrap fade-up">
+    <div class="constraint-card"><h4>PRIMARY KEY</h4><p>Uniquely identifies every row. Cannot be NULL or duplicate. Each table should have exactly one primary key.</p></div>
+    <div class="constraint-card"><h4>FOREIGN KEY</h4><p>Creates a relationship between two tables. The value must exist as a primary key in the referenced table.</p></div>
+    <div class="constraint-card"><h4>UNIQUE</h4><p>Ensures all values in a column are different from each other. A table can have multiple unique columns.</p></div>
+    <div class="constraint-card"><h4>NOT NULL</h4><p>Prevents a column from having a NULL (empty) value. Data must always be provided for that column.</p></div>
+    <div class="constraint-card"><h4>CHECK</h4><p>Validates data against a condition before inserting. Example: age &gt; 10, stock &gt; 200, salary &gt;= 5000.</p></div>
+    <div class="constraint-card"><h4>DEFAULT</h4><p>Assigns a default value automatically when no value is provided during an INSERT statement.</p></div>
+  </div>
+
+  <div class="code-wrap fade-up">
+    <div class="code-bar"><span class="code-lang">SQL — All Constraints in Action</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="cm">-- PRIMARY KEY + NOT NULL + UNIQUE + CHECK + DEFAULT</span>
+<span class="kw">CREATE TABLE</span> <span class="tb">employees</span> (
+    emp_id   <span class="fn">INT</span>         <span class="op">PRIMARY KEY</span>,
+    name     <span class="fn">VARCHAR</span>(<span class="nm">50</span>) <span class="op">NOT NULL</span>,
+    mobile   <span class="fn">BIGINT</span>      <span class="op">UNIQUE</span>,
+    age      <span class="fn">INT</span>         <span class="op">CHECK</span>(age &gt;= <span class="nm">18</span>),
+    status   <span class="fn">VARCHAR</span>(<span class="nm">10</span>) <span class="op">DEFAULT</span> <span class="st">'active'</span>,
+    salary   <span class="fn">INT</span>         <span class="op">DEFAULT</span> <span class="nm">5000</span>
+);
+
+<span class="cm">-- FOREIGN KEY: department table referenced by employee</span>
+<span class="kw">CREATE TABLE</span> <span class="tb">departments</span> (
+    dept_id   <span class="fn">INT</span>         <span class="op">PRIMARY KEY</span>,
+    dept_name <span class="fn">VARCHAR</span>(<span class="nm">50</span>)
+);
+
+<span class="kw">CREATE TABLE</span> <span class="tb">emp_dept</span> (
+    e_id   <span class="fn">INT</span>         <span class="op">PRIMARY KEY</span>,
+    d_id   <span class="fn">INT</span>,
+    e_name <span class="fn">VARCHAR</span>(<span class="nm">50</span>),
+    <span class="op">FOREIGN KEY</span> (d_id) <span class="kw">REFERENCES</span> <span class="tb">departments</span>(dept_id)
+);
+
+<span class="cm">-- Valid inserts</span>
+<span class="kw">INSERT INTO</span> <span class="tb">employees</span> <span class="kw">VALUES</span>(<span class="nm">101</span>, <span class="st">'Ram'</span>, <span class="nm">9753528324</span>, <span class="nm">25</span>, <span class="st">'active'</span>, <span class="nm">60000</span>); <span class="cm">-- ✅</span>
+<span class="kw">INSERT INTO</span> <span class="tb">employees</span>(emp_id, name) <span class="kw">VALUES</span>(<span class="nm">102</span>, <span class="st">'Priya'</span>); <span class="cm">-- ✅ uses defaults</span>
+
+<span class="cm">-- Invalid inserts (will throw errors)</span>
+<span class="kw">INSERT INTO</span> <span class="tb">employees</span> <span class="kw">VALUES</span>(<span class="nm">101</span>, <span class="st">'Gopal'</span>, ...); <span class="cm">-- ❌ Duplicate PK</span>
+<span class="kw">INSERT INTO</span> <span class="tb">employees</span> <span class="kw">VALUES</span>(<span class="nm">103</span>, <span class="st">'Sam'</span>, NULL, <span class="nm">15</span>, ...); <span class="cm">-- ❌ age &lt; 18</span></pre>
+  </div>
+  <div class="grid-2 fade-up">
+    <div class="output-wrap" style="margin:0">
+      <div class="output-bar"><div class="output-label">✅ Valid Result</div></div>
+      <div class="output-body">
+        <table class="sql-table">
+          <tr><th>emp_id</th><th>name</th><th>age</th><th>status</th><th>salary</th></tr>
+          <tr><td>101</td><td>Ram</td><td>25</td><td>active</td><td>60000</td></tr>
+          <tr><td>102</td><td>Priya</td><td>NULL</td><td>active</td><td>5000</td></tr>
+        </table>
+        <p style="font-size:0.75rem;color:var(--accent4);margin-top:0.4rem">Row 102 used DEFAULT values for status and salary</p>
+      </div>
+    </div>
+    <div class="output-wrap" style="margin:0;border-color:var(--red)">
+      <div class="output-bar" style="background:rgba(239,68,68,0.1);border-color:var(--red)">
+        <div class="output-label" style="color:var(--red)">❌ Constraint Violations</div>
+      </div>
+      <div class="output-body" style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--red);line-height:2">
+        ERROR 1062: Duplicate entry '101'<br>for PRIMARY KEY<br><br>
+        ERROR 3819: CHECK constraint 'chk'<br>violated — age = 15 &lt; 18
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== CHAPTER 3 ===== -->
+<section class="content-section" id="content-ch3" style="background:var(--bg2)">
+<div class="section-inner">
+  <div class="chapter-header fade-up">
+    <div class="ch-icon-big">🔧</div>
+    <div>
+      <div class="chapter-num-label">CHAPTER 03</div>
+      <div class="chapter-main-title">SQL Operators & WHERE Clause</div>
+      <div class="chapter-subtitle">Filter, compare and search data with precision using operators and conditions</div>
+    </div>
+  </div>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p><strong>Operators</strong> are special symbols that perform operations on column values or data. The <strong>WHERE clause</strong> uses operators to filter rows based on conditions — it acts like a gatekeeper that only lets matching records through.</p>
+  </div>
+  <div class="grid-3 fade-up">
+    <div class="info-card" style="margin:0">
+      <h4>➕ Arithmetic Operators</h4>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:var(--text2);line-height:2.2">+ &nbsp;Add &nbsp;&nbsp;&nbsp;- &nbsp;Subtract<br>* &nbsp;Multiply &nbsp;/ &nbsp;Divide<br>% &nbsp;Modulus</p>
+    </div>
+    <div class="info-card" style="margin:0">
+      <h4>⚖️ Comparison Operators</h4>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:var(--text2);line-height:2.2">= &nbsp;Equal &nbsp;&nbsp;!= Not equal<br>&lt; &nbsp;Less &nbsp;&nbsp;&gt; &nbsp;Greater<br>&lt;= &nbsp;&nbsp;Less or equal &nbsp;&gt;=</p>
+    </div>
+    <div class="info-card" style="margin:0">
+      <h4>🧠 Logical / Special</h4>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:var(--text2);line-height:2.2">AND &nbsp;OR &nbsp;NOT<br>BETWEEN &nbsp;IN<br>LIKE &nbsp;IS NULL</p>
+    </div>
+  </div>
+
+  <div class="code-wrap fade-up">
+    <div class="code-bar"><span class="code-lang">SQL — All Operators & WHERE Examples</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="cm">-- Setup</span>
+<span class="kw">CREATE TABLE</span> <span class="tb">Students</span>(ID <span class="fn">INT</span>, Name <span class="fn">VARCHAR</span>(<span class="nm">50</span>), Age <span class="fn">INT</span>, Marks <span class="fn">INT</span>, Grade <span class="fn">CHAR</span>(<span class="nm">1</span>), City <span class="fn">VARCHAR</span>(<span class="nm">50</span>));
+<span class="kw">INSERT INTO</span> <span class="tb">Students</span> <span class="kw">VALUES</span>
+(<span class="nm">1</span>,<span class="st">'Amit'</span>,<span class="nm">18</span>,<span class="nm">90</span>,<span class="st">'A'</span>,<span class="st">'Delhi'</span>),(<span class="nm">2</span>,<span class="st">'Neha'</span>,<span class="nm">21</span>,<span class="nm">85</span>,<span class="st">'B'</span>,<span class="st">'Mumbai'</span>),
+(<span class="nm">3</span>,<span class="st">'John'</span>,<span class="nm">17</span>,<span class="nm">60</span>,<span class="st">'C'</span>,<span class="st">'New York'</span>),(<span class="nm">4</span>,<span class="st">'Sara'</span>,<span class="nm">22</span>,NULL,<span class="st">'F'</span>,<span class="st">'London'</span>),
+(<span class="nm">5</span>,<span class="st">'Raj'</span>,<span class="nm">19</span>,<span class="nm">100</span>,<span class="st">'A'</span>,NULL);
+
+<span class="cm">-- Arithmetic: Calculate bonus marks</span>
+<span class="kw">SELECT</span> Name, Marks, Marks+<span class="nm">5</span> <span class="kw">AS</span> Add_5, Marks*<span class="nm">2</span> <span class="kw">AS</span> Double, Marks%<span class="nm">10</span> <span class="kw">AS</span> Mod10
+<span class="kw">FROM</span> <span class="tb">Students</span>;
+
+<span class="cm">-- Comparison Operators</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> Marks = <span class="nm">90</span>;      <span class="cm">-- Equal to</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> Marks &gt; <span class="nm">80</span>;      <span class="cm">-- Greater than</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> Marks != <span class="nm">100</span>;    <span class="cm">-- Not equal</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> Marks &lt;= <span class="nm">85</span>;     <span class="cm">-- Less than or equal</span>
+
+<span class="cm">-- Logical Operators</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> Marks &gt;= <span class="nm">85</span> <span class="op">AND</span> Grade = <span class="st">'A'</span>;
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> Marks &lt; <span class="nm">85</span> <span class="op">OR</span> Grade = <span class="st">'C'</span>;
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> <span class="op">NOT</span> Grade = <span class="st">'F'</span>;
+
+<span class="cm">-- BETWEEN: Inclusive range</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> Marks <span class="op">BETWEEN</span> <span class="nm">80</span> <span class="op">AND</span> <span class="nm">100</span>;
+
+<span class="cm">-- IN: Match from a list of values</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> City <span class="op">IN</span> (<span class="st">'Delhi'</span>, <span class="st">'Mumbai'</span>);
+
+<span class="cm">-- LIKE: Pattern matching with wildcards</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> Name <span class="op">LIKE</span> <span class="st">'A%'</span>;    <span class="cm">-- Starts with A</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> Name <span class="op">LIKE</span> <span class="st">'%a'</span>;    <span class="cm">-- Ends with a</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> Name <span class="op">LIKE</span> <span class="st">'%oh%'</span>;  <span class="cm">-- Contains 'oh'</span>
+
+<span class="cm">-- IS NULL / IS NOT NULL</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> Marks <span class="op">IS NULL</span>;
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> City <span class="op">IS NOT NULL</span>;
+
+<span class="cm">-- ORDER BY + LIMIT</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tb">Students</span> <span class="kw">ORDER BY</span> Marks <span class="kw">DESC</span> <span class="kw">LIMIT</span> <span class="nm">3</span>;</pre>
+  </div>
+  <div class="output-wrap fade-up">
+    <div class="output-bar"><div class="output-label"><i class="fas fa-table"></i> Output — WHERE Marks BETWEEN 80 AND 100</div></div>
+    <div class="output-body">
+      <table class="sql-table">
+        <tr><th>ID</th><th>Name</th><th>Age</th><th>Marks</th><th>Grade</th><th>City</th></tr>
+        <tr><td>1</td><td>Amit</td><td>18</td><td>90</td><td>A</td><td>Delhi</td></tr>
+        <tr><td>2</td><td>Neha</td><td>21</td><td>85</td><td>B</td><td>Mumbai</td></tr>
+        <tr><td>5</td><td>Raj</td><td>19</td><td>100</td><td>A</td><td>NULL</td></tr>
+      </table>
+      <p style="font-size:0.75rem;color:var(--accent4);margin-top:0.4rem">✓ 3 rows returned</p>
+    </div>
+  </div>
+  <div class="alert info fade-up">
+    <span>💡</span>
+    <p><strong>LIKE Wildcards:</strong> <code>%</code> matches any number of characters (including zero). <code>_</code> matches exactly one character. So <code>LIKE '_a%'</code> means: second character is 'a' (e.g., "Ram", "Karan").</p>
+  </div>
+</div>
+</section>
+
+<!-- ===== CHAPTER 4 ===== -->
+<section class="content-section" id="content-ch4" style="background:var(--bg)">
+<div class="section-inner">
+  <div class="chapter-header fade-up">
+    <div class="ch-icon-big">📊</div>
+    <div>
+      <div class="chapter-num-label">CHAPTER 04</div>
+      <div class="chapter-main-title">Aggregate Functions & GROUP BY</div>
+      <div class="chapter-subtitle">Summarize and analyze data using powerful mathematical functions</div>
+    </div>
+  </div>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p><strong>Aggregate Functions</strong> are built-in SQL functions that calculate a single result from multiple rows. They are the backbone of data analysis — used to count records, find averages, totals, minimums and maximums across entire datasets or groups.</p>
+  </div>
+  <div class="grid-3 fade-up" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+    <div class="feat-card" style="text-align:center;border-color:rgba(0,212,255,0.3)"><div class="icon">🔢</div><h4 style="font-family:'JetBrains Mono',monospace;color:var(--accent)">COUNT()</h4><p>Count number of rows</p></div>
+    <div class="feat-card" style="text-align:center;border-color:rgba(124,58,237,0.3)"><div class="icon">➕</div><h4 style="font-family:'JetBrains Mono',monospace;color:var(--accent2)">SUM()</h4><p>Total sum of values</p></div>
+    <div class="feat-card" style="text-align:center;border-color:rgba(245,158,11,0.3)"><div class="icon">📏</div><h4 style="font-family:'JetBrains Mono',monospace;color:var(--accent3)">AVG()</h4><p>Average of values</p></div>
+    <div class="feat-card" style="text-align:center;border-color:rgba(16,185,129,0.3)"><div class="icon">⬇️</div><h4 style="font-family:'JetBrains Mono',monospace;color:var(--accent4)">MIN()</h4><p>Minimum value</p></div>
+    <div class="feat-card" style="text-align:center;border-color:rgba(239,68,68,0.3)"><div class="icon">⬆️</div><h4 style="font-family:'JetBrains Mono',monospace;color:var(--red)">MAX()</h4><p>Maximum value</p></div>
+  </div>
+
+  <div class="code-wrap fade-up">
+    <div class="code-bar"><span class="code-lang">SQL — Aggregate Functions + GROUP BY + HAVING</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="kw">CREATE TABLE</span> <span class="tb">employees</span> (
+    emp_id INT <span class="op">PRIMARY KEY</span>, emp_name <span class="fn">VARCHAR</span>(<span class="nm">100</span>),
+    department <span class="fn">VARCHAR</span>(<span class="nm">50</span>), salary <span class="fn">DECIMAL</span>(<span class="nm">10</span>,<span class="nm">2</span>)
+);
+<span class="kw">INSERT INTO</span> <span class="tb">employees</span> <span class="kw">VALUES</span>
+(<span class="nm">1</span>,<span class="st">'John'</span>,<span class="st">'Sales'</span>,<span class="nm">50000</span>),(<span class="nm">2</span>,<span class="st">'Jane'</span>,<span class="st">'IT'</span>,<span class="nm">75000</span>),
+(<span class="nm">3</span>,<span class="st">'Mike'</span>,<span class="st">'Sales'</span>,<span class="nm">55000</span>),(<span class="nm">4</span>,<span class="st">'Sarah'</span>,<span class="st">'HR'</span>,<span class="nm">60000</span>),
+(<span class="nm">5</span>,<span class="st">'David'</span>,<span class="st">'IT'</span>,<span class="nm">80000</span>),(<span class="nm">6</span>,<span class="st">'Emily'</span>,<span class="st">'HR'</span>,<span class="nm">58000</span>),
+(<span class="nm">7</span>,<span class="st">'Robert'</span>,<span class="st">'Sales'</span>,<span class="nm">52000</span>);
+
+<span class="cm">-- COUNT: How many employees total?</span>
+<span class="kw">SELECT</span> <span class="fn">COUNT</span>(*) <span class="kw">AS</span> total_employees <span class="kw">FROM</span> <span class="tb">employees</span>;
+
+<span class="cm">-- SUM: Total salary bill</span>
+<span class="kw">SELECT</span> <span class="fn">SUM</span>(salary) <span class="kw">AS</span> total_salary <span class="kw">FROM</span> <span class="tb">employees</span>;
+
+<span class="cm">-- AVG: Average salary</span>
+<span class="kw">SELECT</span> <span class="fn">AVG</span>(salary) <span class="kw">AS</span> avg_salary <span class="kw">FROM</span> <span class="tb">employees</span>;
+
+<span class="cm">-- MIN and MAX</span>
+<span class="kw">SELECT</span> <span class="fn">MIN</span>(salary) <span class="kw">AS</span> lowest, <span class="fn">MAX</span>(salary) <span class="kw">AS</span> highest <span class="kw">FROM</span> <span class="tb">employees</span>;
+
+<span class="cm">-- GROUP BY: Per department analysis</span>
+<span class="kw">SELECT</span> department, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> emp_count,
+       <span class="fn">AVG</span>(salary) <span class="kw">AS</span> avg_salary, <span class="fn">SUM</span>(salary) <span class="kw">AS</span> total_salary
+<span class="kw">FROM</span> <span class="tb">employees</span>
+<span class="kw">GROUP BY</span> department;
+
+<span class="cm">-- HAVING: Filter groups where avg salary > 60000</span>
+<span class="kw">SELECT</span> department, <span class="fn">AVG</span>(salary) <span class="kw">AS</span> avg_sal
+<span class="kw">FROM</span> <span class="tb">employees</span>
+<span class="kw">GROUP BY</span> department
+<span class="kw">HAVING</span> <span class="fn">AVG</span>(salary) &gt; <span class="nm">60000</span>;</pre>
+  </div>
+  <div class="grid-2 fade-up">
+    <div class="output-wrap" style="margin:0">
+      <div class="output-bar"><div class="output-label"><i class="fas fa-table"></i> GROUP BY department</div></div>
+      <div class="output-body">
+        <table class="sql-table">
+          <tr><th>department</th><th>emp_count</th><th>avg_salary</th><th>total_salary</th></tr>
+          <tr><td>Sales</td><td>3</td><td>52333.33</td><td>157000</td></tr>
+          <tr><td>IT</td><td>2</td><td>77500.00</td><td>155000</td></tr>
+          <tr><td>HR</td><td>2</td><td>59000.00</td><td>118000</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="output-wrap" style="margin:0">
+      <div class="output-bar"><div class="output-label"><i class="fas fa-table"></i> HAVING avg_salary &gt; 60000</div></div>
+      <div class="output-body">
+        <table class="sql-table">
+          <tr><th>department</th><th>avg_sal</th></tr>
+          <tr><td>IT</td><td>77500.00</td></tr>
+        </table>
+        <p style="font-size:0.75rem;color:var(--accent3);margin-top:0.5rem">⚠️ Only IT qualifies — Sales=52333, HR=59000 excluded</p>
+      </div>
+    </div>
+  </div>
+  <div class="alert warn fade-up">
+    <span>⚠️</span>
+    <p><strong>WHERE vs HAVING:</strong> Use <code>WHERE</code> to filter individual rows BEFORE grouping. Use <code>HAVING</code> to filter groups AFTER GROUP BY. Aggregate functions like AVG() and COUNT() cannot be used in WHERE — only in HAVING.</p>
+  </div>
+</div>
+</section>
+
+<!-- ===== CHAPTER 5 ===== -->
+<section class="content-section" id="content-ch5" style="background:var(--bg2)">
+<div class="section-inner">
+  <div class="chapter-header fade-up">
+    <div class="ch-icon-big">⚙️</div>
+    <div>
+      <div class="chapter-num-label">CHAPTER 05</div>
+      <div class="chapter-main-title">DML, DDL & DQL Commands</div>
+      <div class="chapter-subtitle">The three pillars of SQL — manipulate data, define structure, and query results</div>
+    </div>
+  </div>
+  <div class="grid-3 fade-up">
+    <div class="info-card" style="margin:0;border-color:rgba(0,212,255,0.35)">
+      <h4>🔍 DQL — Data Query Language</h4>
+      <p style="font-size:0.85rem;color:var(--text2);margin-bottom:0.6rem">Used to <strong>retrieve and filter data</strong> from tables. Includes SELECT with all its powerful clauses for filtering, sorting, grouping.</p>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--accent)">SELECT</p>
+    </div>
+    <div class="info-card" style="margin:0;border-color:rgba(245,158,11,0.35)">
+      <h4>✏️ DML — Data Manipulation Language</h4>
+      <p style="font-size:0.85rem;color:var(--text2);margin-bottom:0.6rem">Used to <strong>add, change, or remove rows</strong> inside tables. Changes can be rolled back with TCL commands.</p>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--accent3)">INSERT | UPDATE | DELETE</p>
+    </div>
+    <div class="info-card" style="margin:0;border-color:rgba(124,58,237,0.35)">
+      <h4>🏗️ DDL — Data Definition Language</h4>
+      <p style="font-size:0.85rem;color:var(--text2);margin-bottom:0.6rem">Used to <strong>define and change the structure</strong> of database objects. DDL changes are auto-committed.</p>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--accent2)">CREATE | ALTER | DROP | TRUNCATE</p>
+    </div>
+  </div>
+  <div class="code-wrap fade-up">
+    <div class="code-bar"><span class="code-lang">SQL — DML: INSERT, UPDATE, DELETE</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="cm">-- INSERT: Add a single row</span>
+<span class="kw">INSERT INTO</span> <span class="tb">Students</span> <span class="kw">VALUES</span>(<span class="nm">1</span>, <span class="st">'Amit Sharma'</span>, <span class="nm">22</span>, <span class="st">'Python'</span>, <span class="nm">12000</span>, <span class="st">'Delhi'</span>);
+
+<span class="cm">-- INSERT: Multiple rows at once (efficient)</span>
+<span class="kw">INSERT INTO</span> <span class="tb">Students</span> <span class="kw">VALUES</span>
+(<span class="nm">2</span>, <span class="st">'Sneha Patel'</span>, <span class="nm">20</span>, <span class="st">'Java'</span>,    <span class="nm">10000</span>, <span class="st">'Mumbai'</span>),
+(<span class="nm">3</span>, <span class="st">'Rahul Mehta'</span>, <span class="nm">21</span>, <span class="st">'Python'</span>,  <span class="nm">0</span>,     <span class="st">'Delhi'</span>),
+(<span class="nm">4</span>, <span class="st">'Neha Gupta'</span>,  <span class="nm">19</span>, <span class="st">'Web Dev'</span>, <span class="nm">15000</span>, <span class="st">'Bhopal'</span>);
+
+<span class="cm">-- UPDATE: Change one field</span>
+<span class="kw">UPDATE</span> <span class="tb">Students</span> <span class="kw">SET</span> FeesPaid = <span class="nm">13000</span> <span class="kw">WHERE</span> StudentID = <span class="nm">1</span>;
+
+<span class="cm">-- UPDATE: Change multiple fields</span>
+<span class="kw">UPDATE</span> <span class="tb">Students</span> <span class="kw">SET</span> Age = <span class="nm">24</span>, City = <span class="st">'Noida'</span> <span class="kw">WHERE</span> FullName = <span class="st">'Sneha Patel'</span>;
+
+<span class="cm">-- UPDATE: Conditional — reset fees for Python students who haven't paid</span>
+<span class="kw">UPDATE</span> <span class="tb">Students</span> <span class="kw">SET</span> FeesPaid = <span class="nm">15000</span>
+<span class="kw">WHERE</span> Course = <span class="st">'Python'</span> <span class="op">AND</span> FeesPaid = <span class="nm">0</span>;
+
+<span class="cm">-- UPDATE: Increase Java fees by 10%</span>
+<span class="kw">UPDATE</span> <span class="tb">Students</span> <span class="kw">SET</span> FeesPaid = FeesPaid * <span class="nm">1.1</span> <span class="kw">WHERE</span> Course = <span class="st">'Java'</span>;
+
+<span class="cm">-- DELETE: Remove a specific row</span>
+<span class="kw">DELETE FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> StudentID = <span class="nm">5</span>;
+
+<span class="cm">-- DELETE: Remove all rows with zero fees</span>
+<span class="kw">DELETE FROM</span> <span class="tb">Students</span> <span class="kw">WHERE</span> FeesPaid = <span class="nm">0</span>;
+
+<span class="cm">-- TRUNCATE: Remove ALL rows instantly (cannot rollback)</span>
+<span class="kw">TRUNCATE TABLE</span> <span class="tb">Students</span>;</pre>
+  </div>
+  <div class="code-wrap fade-up">
+    <div class="code-bar"><span class="code-lang">SQL — DDL: CREATE, ALTER, DROP</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="cm">-- CREATE: Build a new table</span>
+<span class="kw">CREATE TABLE</span> <span class="tb">Students</span> (
+    StudentID <span class="fn">INT</span> <span class="op">PRIMARY KEY</span>, FullName <span class="fn">VARCHAR</span>(<span class="nm">100</span>),
+    Age <span class="fn">INT</span>, Course <span class="fn">VARCHAR</span>(<span class="nm">50</span>), JoinDate <span class="fn">DATE</span>, FeesPaid <span class="fn">DECIMAL</span>(<span class="nm">10</span>,<span class="nm">2</span>)
+);
+
+<span class="cm">-- ALTER: Add a new column</span>
+<span class="kw">ALTER TABLE</span> <span class="tb">Students</span> <span class="kw">ADD</span> Email <span class="fn">VARCHAR</span>(<span class="nm">100</span>);
+
+<span class="cm">-- ALTER: Modify column data type</span>
+<span class="kw">ALTER TABLE</span> <span class="tb">Students</span> <span class="kw">MODIFY</span> Age <span class="fn">SMALLINT</span>;
+
+<span class="cm">-- ALTER: Remove a column</span>
+<span class="kw">ALTER TABLE</span> <span class="tb">Students</span> <span class="kw">DROP COLUMN</span> Email;
+
+<span class="cm">-- ALTER: Rename a column (MySQL syntax)</span>
+<span class="kw">ALTER TABLE</span> <span class="tb">Students</span> <span class="kw">CHANGE</span> FullName StudentName <span class="fn">VARCHAR</span>(<span class="nm">50</span>);
+
+<span class="cm">-- ALTER: Add a CHECK constraint</span>
+<span class="kw">ALTER TABLE</span> <span class="tb">Students</span> <span class="kw">ADD CONSTRAINT</span> chk_age <span class="op">CHECK</span>(Age &gt;= <span class="nm">18</span>);
+
+<span class="cm">-- RENAME: Rename entire table</span>
+<span class="kw">RENAME TABLE</span> <span class="tb">Students</span> <span class="kw">TO</span> <span class="tb">StudentRecords</span>;
+
+<span class="cm">-- DROP: Delete entire table (structure + data)</span>
+<span class="kw">DROP TABLE</span> <span class="tb">StudentRecords</span>;</pre>
+  </div>
+  <div class="alert tip fade-up">
+    <span>✅</span>
+    <p><strong>DELETE vs TRUNCATE vs DROP:</strong> <code>DELETE</code> removes specific rows and can be rolled back. <code>TRUNCATE</code> clears ALL rows instantly — faster but cannot be rolled back. <code>DROP</code> removes the entire table including its structure — gone forever.</p>
+  </div>
+</div>
+</section>
+
+<!-- ===== CHAPTER 6 — JOINS ===== -->
+<section class="content-section" id="content-ch6" style="background:var(--bg)">
+<div class="section-inner">
+  <div class="chapter-header fade-up">
+    <div class="ch-icon-big">🔗</div>
+    <div>
+      <div class="chapter-num-label">CHAPTER 06</div>
+      <div class="chapter-main-title">SQL Joins — Combining Tables</div>
+      <div class="chapter-subtitle">Connect related tables and retrieve combined data — visualized with Venn Diagrams</div>
+    </div>
+  </div>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p>A <strong>JOIN</strong> combines rows from two or more tables based on a related column — usually a Foreign Key. Instead of storing everything in one giant table, we split data into organized tables and use JOINs to bring it together when needed.</p>
+  </div>
+
+  <h3 class="sub-heading fade-up">All Join Types — Venn Diagram Visualization</h3>
+  <div class="join-types fade-up">
+    <div class="join-card">
+      <h4>🔵 INNER JOIN</h4>
+      <svg class="join-diagram" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="75" cy="40" r="35" fill="rgba(0,212,255,0.12)" stroke="#00d4ff" stroke-width="2"/>
+        <circle cx="125" cy="40" r="35" fill="rgba(124,58,237,0.12)" stroke="#7c3aed" stroke-width="2"/>
+        <path d="M100,6 A35,35 0 0,1 100,74 A35,35 0 0,1 100,6" fill="rgba(0,212,255,0.5)"/>
+        <text x="50" y="44" fill="#9999bb" font-size="9" font-family="monospace">EMP</text>
+        <text x="133" y="44" fill="#9999bb" font-size="9" font-family="monospace">DEPT</text>
+        <text x="88" y="44" fill="#fff" font-size="8" font-weight="bold">MATCH</text>
+      </svg>
+      <p>Returns rows where both tables have matching records. Non-matching rows from either side are excluded.</p>
+      <code>INNER JOIN / JOIN</code>
+    </div>
+    <div class="join-card">
+      <h4>⬅️ LEFT JOIN</h4>
+      <svg class="join-diagram" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="75" cy="40" r="35" fill="rgba(0,212,255,0.45)" stroke="#00d4ff" stroke-width="2"/>
+        <circle cx="125" cy="40" r="35" fill="rgba(124,58,237,0.08)" stroke="#7c3aed" stroke-width="2"/>
+        <text x="48" y="44" fill="#fff" font-size="8" font-family="monospace" font-weight="bold">ALL EMP</text>
+        <text x="133" y="44" fill="#9999bb" font-size="9" font-family="monospace">DEPT</text>
+      </svg>
+      <p>All rows from LEFT table + matching rows from right. Non-matching right rows appear as NULL.</p>
+      <code>LEFT JOIN / LEFT OUTER JOIN</code>
+    </div>
+    <div class="join-card">
+      <h4>➡️ RIGHT JOIN</h4>
+      <svg class="join-diagram" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="75" cy="40" r="35" fill="rgba(0,212,255,0.08)" stroke="#00d4ff" stroke-width="2"/>
+        <circle cx="125" cy="40" r="35" fill="rgba(124,58,237,0.45)" stroke="#7c3aed" stroke-width="2"/>
+        <text x="50" y="44" fill="#9999bb" font-size="9" font-family="monospace">EMP</text>
+        <text x="110" y="44" fill="#fff" font-size="8" font-family="monospace" font-weight="bold">ALL DEPT</text>
+      </svg>
+      <p>Matching rows from left + ALL rows from RIGHT table. Non-matching left rows appear as NULL.</p>
+      <code>RIGHT JOIN / RIGHT OUTER JOIN</code>
+    </div>
+    <div class="join-card">
+      <h4>🔄 FULL JOIN</h4>
+      <svg class="join-diagram" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="75" cy="40" r="35" fill="rgba(0,212,255,0.4)" stroke="#00d4ff" stroke-width="2"/>
+        <circle cx="125" cy="40" r="35" fill="rgba(124,58,237,0.4)" stroke="#7c3aed" stroke-width="2"/>
+        <text x="46" y="44" fill="#fff" font-size="8" font-family="monospace" font-weight="bold">ALL</text>
+        <text x="132" y="44" fill="#fff" font-size="8" font-family="monospace" font-weight="bold">ALL</text>
+      </svg>
+      <p>ALL rows from BOTH tables. NULLs where there's no match. MySQL: use LEFT + RIGHT JOIN with UNION.</p>
+      <code>FULL OUTER JOIN (via UNION)</code>
+    </div>
+    <div class="join-card">
+      <h4>✖️ CROSS JOIN</h4>
+      <svg class="join-diagram" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="15" width="55" height="50" rx="5" fill="rgba(0,212,255,0.15)" stroke="#00d4ff" stroke-width="2"/>
+        <rect x="125" y="15" width="55" height="50" rx="5" fill="rgba(124,58,237,0.15)" stroke="#7c3aed" stroke-width="2"/>
+        <line x1="75" y1="25" x2="125" y2="55" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="75" y1="40" x2="125" y2="40" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2"/>
+        <line x1="75" y1="55" x2="125" y2="25" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2"/>
+        <text x="30" y="44" fill="#9999bb" font-size="8">EMP</text>
+        <text x="133" y="44" fill="#9999bb" font-size="8">DEPT</text>
+      </svg>
+      <p>Every row from table A combined with every row from table B. 5 employees × 4 departments = 20 rows.</p>
+      <code>CROSS JOIN</code>
+    </div>
+    <div class="join-card">
+      <h4>🔁 SELF JOIN</h4>
+      <svg class="join-diagram" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="40" rx="60" ry="28" fill="rgba(0,212,255,0.08)" stroke="#00d4ff" stroke-width="2"/>
+        <text x="55" y="35" fill="#9999bb" font-size="8" font-family="monospace">Employees E</text>
+        <text x="60" y="52" fill="#9999bb" font-size="8" font-family="monospace">Employees M</text>
+        <path d="M85,38 Q100,18 115,38" stroke="#f59e0b" fill="none" stroke-width="1.5" stroke-dasharray="3,2"/>
+        <text x="94" y="22" fill="#f59e0b" font-size="7">mgr</text>
+      </svg>
+      <p>A table joined to itself. Perfect for hierarchical relationships like employee → manager.</p>
+      <code>E JOIN E AS M ON E.ManagerID = M.EmpID</code>
+    </div>
+  </div>
+
+  <div class="code-wrap fade-up">
+    <div class="code-bar"><span class="code-lang">SQL — All JOIN Types with Data</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="cm">-- Setup: Departments Table</span>
+<span class="kw">CREATE TABLE</span> <span class="tb">Departments</span>(DeptID <span class="fn">INT</span> <span class="op">PRIMARY KEY</span>, DeptName <span class="fn">VARCHAR</span>(<span class="nm">100</span>));
+<span class="kw">INSERT INTO</span> <span class="tb">Departments</span> <span class="kw">VALUES</span>(<span class="nm">1</span>,<span class="st">'HR'</span>),(<span class="nm">2</span>,<span class="st">'IT'</span>),(<span class="nm">3</span>,<span class="st">'Finance'</span>),(<span class="nm">4</span>,<span class="st">'Marketing'</span>);
+
+<span class="cm">-- Setup: Employees Table</span>
+<span class="kw">CREATE TABLE</span> <span class="tb">Employees</span>(EmpID <span class="fn">INT</span> <span class="op">PRIMARY KEY</span>, EmpName <span class="fn">VARCHAR</span>(<span class="nm">100</span>), DeptID <span class="fn">INT</span>);
+<span class="kw">INSERT INTO</span> <span class="tb">Employees</span> <span class="kw">VALUES</span>
+(<span class="nm">101</span>,<span class="st">'Amit Sharma'</span>,<span class="nm">1</span>),(<span class="nm">102</span>,<span class="st">'Priya Singh'</span>,<span class="nm">2</span>),
+(<span class="nm">103</span>,<span class="st">'Ravi Kumar'</span>,<span class="nm">2</span>),(<span class="nm">104</span>,<span class="st">'Neha Gupta'</span>,NULL),  <span class="cm">-- No department</span>
+(<span class="nm">105</span>,<span class="st">'Anil Yadav'</span>,<span class="nm">5</span>);                             <span class="cm">-- Invalid dept</span>
+
+<span class="cm">-- 1. INNER JOIN: Only employees with valid departments</span>
+<span class="kw">SELECT</span> E.EmpName, D.DeptName
+<span class="kw">FROM</span> <span class="tb">Employees</span> E <span class="kw">INNER JOIN</span> <span class="tb">Departments</span> D <span class="kw">ON</span> E.DeptID = D.DeptID;
+
+<span class="cm">-- 2. LEFT JOIN: All employees, NULLs for unmatched department</span>
+<span class="kw">SELECT</span> E.EmpName, D.DeptName
+<span class="kw">FROM</span> <span class="tb">Employees</span> E <span class="kw">LEFT JOIN</span> <span class="tb">Departments</span> D <span class="kw">ON</span> E.DeptID = D.DeptID;
+
+<span class="cm">-- 3. RIGHT JOIN: All departments, even empty ones</span>
+<span class="kw">SELECT</span> E.EmpName, D.DeptName
+<span class="kw">FROM</span> <span class="tb">Employees</span> E <span class="kw">RIGHT JOIN</span> <span class="tb">Departments</span> D <span class="kw">ON</span> E.DeptID = D.DeptID;
+
+<span class="cm">-- 4. FULL JOIN (MySQL — using UNION)</span>
+<span class="kw">SELECT</span> E.EmpName, D.DeptName
+<span class="kw">FROM</span> <span class="tb">Employees</span> E <span class="kw">LEFT JOIN</span> <span class="tb">Departments</span> D <span class="kw">ON</span> E.DeptID = D.DeptID
+<span class="kw">UNION</span>
+<span class="kw">SELECT</span> E.EmpName, D.DeptName
+<span class="kw">FROM</span> <span class="tb">Employees</span> E <span class="kw">RIGHT JOIN</span> <span class="tb">Departments</span> D <span class="kw">ON</span> E.DeptID = D.DeptID;
+
+<span class="cm">-- 5. CROSS JOIN: Every employee x every department</span>
+<span class="kw">SELECT</span> E.EmpName, D.DeptName <span class="kw">FROM</span> <span class="tb">Employees</span> E <span class="kw">CROSS JOIN</span> <span class="tb">Departments</span> D;
+
+<span class="cm">-- 6. SELF JOIN: Employee and their manager</span>
+<span class="kw">SELECT</span> E.EmpName <span class="kw">AS</span> Employee, M.EmpName <span class="kw">AS</span> Manager
+<span class="kw">FROM</span> <span class="tb">Employees</span> E <span class="kw">LEFT JOIN</span> <span class="tb">Employees</span> M <span class="kw">ON</span> E.ManagerID = M.EmpID;
+
+<span class="cm">-- 7. 3-Table JOIN: Students + Courses + Enrollments</span>
+<span class="kw">SELECT</span> E.EnrollmentID, S.StudentName, C.CourseName, E.EnrollmentDate
+<span class="kw">FROM</span> <span class="tb">Enrollments</span> E
+<span class="kw">JOIN</span> <span class="tb">Students</span> S <span class="kw">ON</span> E.StudentID = S.StudentID
+<span class="kw">JOIN</span> <span class="tb">Courses</span> C  <span class="kw">ON</span> E.CourseID  = C.CourseID;</pre>
+  </div>
+
+  <div class="grid-2 fade-up">
+    <div class="output-wrap" style="margin:0">
+      <div class="output-bar"><div class="output-label"><i class="fas fa-table"></i> INNER JOIN Result</div></div>
+      <div class="output-body">
+        <table class="sql-table">
+          <tr><th>EmpName</th><th>DeptName</th></tr>
+          <tr><td>Amit Sharma</td><td>HR</td></tr>
+          <tr><td>Priya Singh</td><td>IT</td></tr>
+          <tr><td>Ravi Kumar</td><td>IT</td></tr>
+        </table>
+        <p style="font-size:0.74rem;color:var(--text3);margin-top:0.4rem">Neha (NULL dept) & Anil (invalid dept 5) excluded</p>
+      </div>
+    </div>
+    <div class="output-wrap" style="margin:0">
+      <div class="output-bar"><div class="output-label"><i class="fas fa-table"></i> LEFT JOIN Result</div></div>
+      <div class="output-body">
+        <table class="sql-table">
+          <tr><th>EmpName</th><th>DeptName</th></tr>
+          <tr><td>Amit Sharma</td><td>HR</td></tr>
+          <tr><td>Priya Singh</td><td>IT</td></tr>
+          <tr><td>Ravi Kumar</td><td>IT</td></tr>
+          <tr><td>Neha Gupta</td><td style="color:var(--red)">NULL</td></tr>
+          <tr><td>Anil Yadav</td><td style="color:var(--red)">NULL</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===== CHAPTER 7 — SUBQUERIES ===== -->
+<section class="content-section" id="content-ch7" style="background:var(--bg2)">
+<div class="section-inner">
+  <div class="chapter-header fade-up">
+    <div class="ch-icon-big">🧩</div>
+    <div>
+      <div class="chapter-num-label">CHAPTER 07</div>
+      <div class="chapter-main-title">Subqueries — Nested Queries</div>
+      <div class="chapter-subtitle">A query inside another query — understand how parent and child queries work together</div>
+    </div>
+  </div>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p>A <strong>Subquery</strong> (also called a Nested Query) is a SQL query written inside another SQL query. The <strong>inner (child) query executes first</strong>, produces a result, and that result is then used by the <strong>outer (parent) query</strong>. This allows solving complex problems step by step.</p>
+  </div>
+
+  <h3 class="sub-heading fade-up">Parent vs Child Query — Visual Breakdown</h3>
+  <div class="subquery-visual fade-up">
+    <div class="sq-outer">
+      <span class="sq-label">PARENT QUERY — Outer (runs second)</span>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:0.88rem;color:#c084fc;line-height:2;margin-top:0.4rem">
+        SELECT emp_name, salary FROM employees<br>
+        WHERE salary &gt; <span style="color:var(--accent3);background:rgba(245,158,11,0.15);padding:0.1rem 0.3rem;border-radius:3px">( ← uses child's result here )</span>
+      </div>
+      <div class="sq-arrow">↓ Parent waits for child to finish executing</div>
+      <div class="sq-inner">
+        <span class="sq-label">CHILD QUERY — Inner (runs first)</span>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.88rem;color:var(--accent);line-height:2;margin-top:0.4rem">
+          SELECT AVG(salary) FROM employees
+        </div>
+        <div style="margin-top:0.8rem;padding:0.6rem;background:rgba(0,0,0,0.25);border-radius:6px;display:flex;align-items:center;gap:1rem">
+          <span style="font-size:0.75rem;color:var(--accent4)">▶ Child Output:</span>
+          <span style="font-family:'JetBrains Mono',monospace;color:var(--accent3);font-size:0.9rem;font-weight:700">65000</span>
+          <span style="font-size:0.75rem;color:var(--text3)">(average salary of all employees)</span>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:1.2rem;padding:1rem;background:rgba(0,0,0,0.2);border-radius:10px">
+      <p style="font-size:0.75rem;color:var(--accent4);margin-bottom:0.6rem">▶ Parent Final Output — Employees where salary &gt; 65000:</p>
+      <table class="sql-table">
+        <tr><th>emp_name</th><th>salary</th></tr>
+        <tr><td>Priya</td><td>70000</td></tr>
+        <tr><td>Asha</td><td>90000</td></tr>
+        <tr><td>Karan</td><td>70000</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="code-wrap fade-up">
+    <div class="code-bar"><span class="code-lang">SQL — All Types of Subqueries</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="cm">-- SETUP</span>
+<span class="kw">INSERT INTO</span> <span class="tb">employees</span> <span class="kw">VALUES</span>
+(<span class="nm">1</span>,<span class="st">'Ram'</span>,<span class="nm">50000</span>,<span class="nm">101</span>),(<span class="nm">2</span>,<span class="st">'Priya'</span>,<span class="nm">70000</span>,<span class="nm">102</span>),
+(<span class="nm">3</span>,<span class="st">'John'</span>,<span class="nm">60000</span>,<span class="nm">101</span>),(<span class="nm">4</span>,<span class="st">'Asha'</span>,<span class="nm">90000</span>,<span class="nm">103</span>),
+(<span class="nm">5</span>,<span class="st">'Karan'</span>,<span class="nm">70000</span>,<span class="nm">102</span>),(<span class="nm">6</span>,<span class="st">'Meena'</span>,<span class="nm">50000</span>,<span class="nm">103</span>);
+
+<span class="cm">-- 1. SINGLE-ROW subquery (returns one value)</span>
+<span class="cm">--    Employees earning more than average salary</span>
+<span class="kw">SELECT</span> emp_name, salary <span class="kw">FROM</span> <span class="tb">employees</span>
+<span class="kw">WHERE</span> salary &gt; (<span class="kw">SELECT</span> <span class="fn">AVG</span>(salary) <span class="kw">FROM</span> <span class="tb">employees</span>);
+
+<span class="cm">-- 2. MULTIPLE-ROW subquery (returns a list)</span>
+<span class="cm">--    Employees in IT or HR departments</span>
+<span class="kw">SELECT</span> emp_name <span class="kw">FROM</span> <span class="tb">employees</span>
+<span class="kw">WHERE</span> dept_id <span class="op">IN</span> (
+    <span class="kw">SELECT</span> dept_id <span class="kw">FROM</span> <span class="tb">departments</span>
+    <span class="kw">WHERE</span> dept_name <span class="op">IN</span> (<span class="st">'IT'</span>, <span class="st">'HR'</span>)
+);
+
+<span class="cm">-- 3. CORRELATED subquery (inner uses outer's value)</span>
+<span class="cm">--    Highest paid employee in EACH department</span>
+<span class="kw">SELECT</span> emp_name, salary, dept_id
+<span class="kw">FROM</span> <span class="tb">employees</span> e
+<span class="kw">WHERE</span> salary = (
+    <span class="kw">SELECT</span> <span class="fn">MAX</span>(salary)
+    <span class="kw">FROM</span> <span class="tb">employees</span>
+    <span class="kw">WHERE</span> dept_id = e.dept_id   <span class="cm">-- ← references outer query's row</span>
+);
+
+<span class="cm">-- 4. SCALAR subquery (used in SELECT column)</span>
+<span class="cm">--    Each employee's salary vs company average</span>
+<span class="kw">SELECT</span> emp_name, salary,
+    (<span class="kw">SELECT</span> <span class="fn">AVG</span>(salary) <span class="kw">FROM</span> <span class="tb">employees</span>) <span class="kw">AS</span> company_avg,
+    salary - (<span class="kw">SELECT</span> <span class="fn">AVG</span>(salary) <span class="kw">FROM</span> <span class="tb">employees</span>) <span class="kw">AS</span> difference
+<span class="kw">FROM</span> <span class="tb">employees</span>;
+
+<span class="cm">-- 5. Subquery in FROM (Inline View / Derived Table)</span>
+<span class="kw">SELECT</span> dept_id, avg_salary
+<span class="kw">FROM</span> (
+    <span class="kw">SELECT</span> dept_id, <span class="fn">AVG</span>(salary) <span class="kw">AS</span> avg_salary
+    <span class="kw">FROM</span> <span class="tb">employees</span>
+    <span class="kw">GROUP BY</span> dept_id
+) <span class="kw">AS</span> dept_summary;
+
+<span class="cm">-- 6. SECOND HIGHEST SALARY (classic interview question!)</span>
+<span class="kw">SELECT</span> <span class="fn">MAX</span>(salary) <span class="kw">AS</span> second_highest
+<span class="kw">FROM</span> <span class="tb">employees</span>
+<span class="kw">WHERE</span> salary &lt; (<span class="kw">SELECT</span> <span class="fn">MAX</span>(salary) <span class="kw">FROM</span> <span class="tb">employees</span>);</pre>
+  </div>
+
+  <h3 class="sub-heading fade-up">Parent & Child Outputs — Side by Side</h3>
+  <div class="grid-2 fade-up">
+    <div>
+      <div class="output-wrap" style="margin:0 0 1rem">
+        <div class="output-bar"><div class="output-label">🧒 Child Query (runs FIRST)</div></div>
+        <div class="output-body">
+          <p style="font-size:0.75rem;color:var(--text3);margin-bottom:0.5rem;font-family:monospace">SELECT AVG(salary) FROM employees</p>
+          <table class="sql-table"><tr><th>AVG(salary)</th></tr><tr><td style="color:var(--accent3);font-weight:700">65000.00</td></tr></table>
+        </div>
+      </div>
+      <div class="output-wrap" style="margin:0">
+        <div class="output-bar"><div class="output-label">🧒 Correlated Child (per-row)</div></div>
+        <div class="output-body">
+          <p style="font-size:0.75rem;color:var(--text3);margin-bottom:0.5rem;font-family:monospace">MAX(salary) per dept_id</p>
+          <table class="sql-table">
+            <tr><th>dept_id</th><th>MAX(salary)</th></tr>
+            <tr><td>101 (IT)</td><td>60000</td></tr>
+            <tr><td>102 (HR)</td><td>70000</td></tr>
+            <tr><td>103 (Mkt)</td><td>90000</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="output-wrap" style="margin:0 0 1rem">
+        <div class="output-bar"><div class="output-label">👤 Parent Query (FINAL result)</div></div>
+        <div class="output-body">
+          <p style="font-size:0.75rem;color:var(--text3);margin-bottom:0.5rem;font-family:monospace">WHERE salary &gt; 65000</p>
+          <table class="sql-table">
+            <tr><th>emp_name</th><th>salary</th></tr>
+            <tr><td>Priya</td><td>70000</td></tr>
+            <tr><td>Asha</td><td>90000</td></tr>
+            <tr><td>Karan</td><td>70000</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="output-wrap" style="margin:0">
+        <div class="output-bar"><div class="output-label">👤 Correlated Parent (FINAL)</div></div>
+        <div class="output-body">
+          <p style="font-size:0.75rem;color:var(--text3);margin-bottom:0.5rem;font-family:monospace">Highest paid per department</p>
+          <table class="sql-table">
+            <tr><th>emp_name</th><th>salary</th><th>dept</th></tr>
+            <tr><td>John</td><td>60000</td><td>101</td></tr>
+            <tr><td>Priya</td><td>70000</td><td>102</td></tr>
+            <tr><td>Asha</td><td>90000</td><td>103</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="alert tip fade-up">
+    <span>✅</span>
+    <p><strong>Golden Rule:</strong> The <strong>inner (child) query ALWAYS runs first</strong> and passes its result to the outer (parent) query. In a correlated subquery, the inner query runs once per row of the outer query — making it powerful but slower on large datasets.</p>
+  </div>
+</div>
+</section>
+
+<!-- ===== CHAPTER 8 — TCL & DCL ===== -->
+<section class="content-section" id="content-ch8" style="background:var(--bg)">
+<div class="section-inner">
+  <div class="chapter-header fade-up">
+    <div class="ch-icon-big">🔐</div>
+    <div>
+      <div class="chapter-num-label">CHAPTER 08</div>
+      <div class="chapter-main-title">TCL & DCL Commands</div>
+      <div class="chapter-subtitle">Control transactions and manage who can access what in your database</div>
+    </div>
+  </div>
+
+  <h3 class="sub-heading fade-up">TCL — Transaction Control Language</h3>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p><strong>TCL (Transaction Control Language)</strong> manages database transactions. A <strong>transaction</strong> is a group of SQL statements executed as one atomic unit — either all statements succeed together, or all fail together. This ensures data stays consistent even if something goes wrong mid-way.</p>
+  </div>
+  <div class="tcl-flow fade-up">
+    <div class="tcl-step"><div class="tcl-step-icon">▶️</div><div class="tcl-step-name">BEGIN</div></div>
+    <div class="tcl-arrow">→</div>
+    <div class="tcl-step"><div class="tcl-step-icon">✏️</div><div class="tcl-step-name">SQL Ops</div></div>
+    <div class="tcl-arrow">→</div>
+    <div class="tcl-step savepoint"><div class="tcl-step-icon">📌</div><div class="tcl-step-name">SAVEPOINT</div></div>
+    <div class="tcl-arrow">→</div>
+    <div class="tcl-step"><div class="tcl-step-icon">✏️</div><div class="tcl-step-name">More SQL</div></div>
+    <div class="tcl-arrow">→</div>
+    <div class="tcl-step commit"><div class="tcl-step-icon">✅</div><div class="tcl-step-name">COMMIT</div></div>
+    <div class="tcl-arrow">or</div>
+    <div class="tcl-step rollback"><div class="tcl-step-icon">↩️</div><div class="tcl-step-name">ROLLBACK</div></div>
+  </div>
+
+  <div class="code-wrap fade-up">
+    <div class="code-bar"><span class="code-lang">SQL — TCL: COMMIT, ROLLBACK, SAVEPOINT</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="cm">-- Example 1: COMMIT — Bank transfer Alice → Bob ₹1000</span>
+<span class="kw">BEGIN</span>;
+
+<span class="kw">UPDATE</span> <span class="tb">BankAccounts</span> <span class="kw">SET</span> Balance = Balance - <span class="nm">1000</span> <span class="kw">WHERE</span> AccountID = <span class="nm">1</span>; <span class="cm">-- Debit Alice</span>
+<span class="kw">UPDATE</span> <span class="tb">BankAccounts</span> <span class="kw">SET</span> Balance = Balance + <span class="nm">1000</span> <span class="kw">WHERE</span> AccountID = <span class="nm">2</span>; <span class="cm">-- Credit Bob</span>
+
+<span class="kw">COMMIT</span>; <span class="cm">-- ✅ Save both changes permanently</span>
+
+<span class="cm">-- Example 2: ROLLBACK — Cancel if error occurs</span>
+<span class="kw">BEGIN</span>;
+
+<span class="kw">UPDATE</span> <span class="tb">BankAccounts</span> <span class="kw">SET</span> Balance = Balance - <span class="nm">2000</span> <span class="kw">WHERE</span> AccountID = <span class="nm">1</span>;
+<span class="cm">-- Error detected! Alice doesn't have ₹2000</span>
+<span class="kw">ROLLBACK</span>; <span class="cm">-- ↩️ Undo everything — Alice's balance is unchanged</span>
+
+<span class="cm">-- Example 3: SAVEPOINT — Partial undo</span>
+<span class="kw">BEGIN</span>;
+
+<span class="kw">UPDATE</span> <span class="tb">BankAccounts</span> <span class="kw">SET</span> Balance = Balance - <span class="nm">500</span> <span class="kw">WHERE</span> AccountID = <span class="nm">1</span>;
+<span class="kw">SAVEPOINT</span> checkpoint_a; <span class="cm">-- 📌 Save this point</span>
+
+<span class="kw">UPDATE</span> <span class="tb">BankAccounts</span> <span class="kw">SET</span> Balance = Balance + <span class="nm">500</span> <span class="kw">WHERE</span> AccountID = <span class="nm">2</span>;
+
+<span class="kw">ROLLBACK TO</span> checkpoint_a; <span class="cm">-- ↩️ Undo Bob's credit, keep Alice's debit</span>
+
+<span class="kw">COMMIT</span>; <span class="cm">-- Only Alice's ₹500 deduction saved</span></pre>
+  </div>
+
+  <h3 class="sub-heading fade-up">DCL — Data Control Language</h3>
+  <div class="def-box fade-up">
+    <h4>Definition</h4>
+    <p><strong>DCL (Data Control Language)</strong> controls <em>who</em> can access <em>what</em> in the database. It has two commands: <strong>GRANT</strong> (give permissions to users) and <strong>REVOKE</strong> (take away permissions). These require admin/DBA privileges.</p>
+  </div>
+  <div class="code-wrap fade-up">
+    <div class="code-bar"><span class="code-lang">SQL — DCL: GRANT & REVOKE</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <pre><span class="cm">-- Step 1: Create a new user</span>
+<span class="kw">CREATE USER</span> <span class="st">'trainer'</span>@<span class="st">'localhost'</span> <span class="kw">IDENTIFIED BY</span> <span class="st">'pass123'</span>;
+
+<span class="cm">-- Step 2: GRANT select-only access</span>
+<span class="kw">GRANT SELECT ON</span> <span class="tb">EmployeeData</span> <span class="kw">TO</span> <span class="st">'trainer'</span>@<span class="st">'localhost'</span>;
+
+<span class="cm">-- Step 3: GRANT multiple permissions</span>
+<span class="kw">GRANT SELECT</span>, <span class="kw">INSERT</span>, <span class="kw">UPDATE ON</span> <span class="tb">EmployeeData</span> <span class="kw">TO</span> <span class="st">'trainer'</span>@<span class="st">'localhost'</span>;
+
+<span class="cm">-- Step 4: GRANT full admin access (use carefully!)</span>
+<span class="kw">GRANT ALL PRIVILEGES ON</span> *.* <span class="kw">TO</span> <span class="st">'trainer'</span>@<span class="st">'localhost'</span>;
+
+<span class="cm">-- Step 5: REVOKE specific permissions</span>
+<span class="kw">REVOKE INSERT</span>, <span class="kw">UPDATE ON</span> <span class="tb">EmployeeData</span> <span class="kw">FROM</span> <span class="st">'trainer'</span>@<span class="st">'localhost'</span>;
+
+<span class="cm">-- Step 6: REVOKE all permissions</span>
+<span class="kw">REVOKE ALL PRIVILEGES ON</span> *.* <span class="kw">FROM</span> <span class="st">'trainer'</span>@<span class="st">'localhost'</span>;
+
+<span class="cm">-- Step 7: Check what permissions a user has</span>
+<span class="kw">SHOW GRANTS FOR</span> <span class="st">'trainer'</span>@<span class="st">'localhost'</span>;
+
+<span class="cm">-- Step 8: Apply changes immediately</span>
+<span class="kw">FLUSH PRIVILEGES</span>;
+
+<span class="cm">-- Step 9: Remove the user completely</span>
+<span class="kw">DROP USER</span> <span class="st">'trainer'</span>@<span class="st">'localhost'</span>;</pre>
+  </div>
+
+  <div class="grid-2 fade-up">
+    <div class="info-card" style="margin:0;border-color:rgba(16,185,129,0.35)">
+      <h4 style="color:var(--accent4)">✅ COMMIT — Permanently Saved</h4>
+      <p style="font-size:0.85rem;color:var(--text2)">Once COMMIT is executed, all changes in the transaction are written permanently to the database. They cannot be undone with ROLLBACK after this point.</p>
+    </div>
+    <div class="info-card" style="margin:0;border-color:rgba(239,68,68,0.35)">
+      <h4 style="color:var(--red)">↩️ ROLLBACK — Undo All Changes</h4>
+      <p style="font-size:0.85rem;color:var(--text2)">ROLLBACK cancels all changes made since the last COMMIT or SAVEPOINT. The database is restored to its previous state — as if the transaction never happened.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- WHY CHOOSE -->
+<section id="why" style="background:var(--bg2)">
+<div class="section-inner">
+  <div class="section-tag fade-up">Why Choose Us</div>
+  <h2 class="section-title fade-up">Why Learn SQL with Ram Sir?</h2>
+  <p class="section-desc fade-up">Not just another course — a complete, practical, doubt-friendly learning experience built for real results.</p>
+  <div class="why-grid">
+    <div class="why-card fade-up"><div class="why-icon">🎯</div><h3>Concept-First Teaching</h3><p>Every topic starts with a clear definition and real-world analogy before any code. You understand WHY, not just HOW. This makes knowledge stick permanently in your memory.</p></div>
+    <div class="why-card fade-up"><div class="why-icon">💻</div><h3>Hands-On Practice</h3><p>Every concept comes with working SQL code, real examples, and actual query output tables. You practice on real databases — not toy examples that don't teach anything.</p></div>
+    <div class="why-card fade-up"><div class="why-icon">📱</div><h3>WhatsApp Support</h3><p>Got stuck on a query at midnight? Message directly on WhatsApp: <strong>9753528324</strong>. Ram Sir provides personal doubt resolution — not bots, not FAQ pages.</p></div>
+    <div class="why-card fade-up"><div class="why-icon">🧑‍💻</div><h3>1-on-1 Live Sessions</h3><p>Opt for personalized one-to-one live sessions on Google Meet or Zoom. Get individual attention, code reviews, and custom problem sets designed for your level.</p></div>
+    <div class="why-card fade-up"><div class="why-icon">📊</div><h3>Interview-Ready Prep</h3><p>20+ practice questions per chapter with complete solutions. Topics like second highest salary, correlated subqueries, and all join types — exactly what top companies ask.</p></div>
+    <div class="why-card fade-up"><div class="why-icon">🚀</div><h3>Zero to Pro Journey</h3><p>Structured curriculum from "what is data?" to advanced correlated subqueries, TCL and DCL. No prior programming knowledge required — anyone can start today.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- TRAINER -->
+<section id="trainer" style="background:var(--bg)">
+<div class="section-inner">
+  <div class="section-tag fade-up">Your Instructor</div>
+  <h2 class="section-title fade-up">About Ram Sir</h2>
+  <div class="trainer-wrap">
+    <div class="fade-up" style="text-align:center">
+      <div class="avatar-ring"><div class="avatar-inner">👨‍💻</div></div>
+      <div class="trainer-name">Ram Sir</div>
+      <div class="trainer-title">// Technical Trainer & AI Educator</div>
+      <div class="social-links social-links-center">
+        <a class="social-link" href="https://wa.me/919753528324" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a class="social-link" href="https://www.youtube.com/@ramsirdevix" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a class="social-link" href="https://www.linkedin.com/in/ramgopal-prajapati-b30237264/" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a class="social-link" href="https://www.instagram.com/iamramsir" title="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="fade-up">
+      <p class="trainer-bio">Ram Sir is a passionate and dedicated <strong>Technical Trainer</strong> who believes every student can master technology with the right guidance. With a strong foundation in computer science and years of hands-on experience, Ram Sir has trained hundreds of students in SQL, Python, web development and more at <strong>Symyak Classes, Indore</strong>.</p>
+      <p class="trainer-bio">His teaching philosophy: <em>"Understand the concept deeply first — then code becomes natural."</em> He uses real-world analogies, step-by-step explanations, and interactive sessions to make even complex topics like correlated subqueries and database transactions feel approachable and logical.</p>
+      <p class="trainer-bio">Ram Sir's goal is to bridge the gap between classroom learning and industry requirements — helping students become truly job-ready with practical, interview-focused skills that employers actually look for.</p>
+      <div class="trainer-stats">
+        <div class="tr-stat"><div class="tr-stat-num">500+</div><div class="tr-stat-label">Students Trained</div></div>
+        <div class="tr-stat"><div class="tr-stat-num">5+</div><div class="tr-stat-label">Years Experience</div></div>
+        <div class="tr-stat"><div class="tr-stat-num">100%</div><div class="tr-stat-label">Dedication</div></div>
+      </div>
+      <div class="skill-tags">
+        <span class="skill-tag">MySQL</span><span class="skill-tag">Python</span><span class="skill-tag">Web Development</span>
+        <span class="skill-tag">Database Design</span><span class="skill-tag">Advanced SQL</span><span class="skill-tag">MongoDB</span>
+        <span class="skill-tag">Data Analytics</span><span class="skill-tag">Interview Prep</span><span class="skill-tag">Problem Solving</span>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- COURSE PLANS -->
+<section id="course" style="background:var(--bg2)">
+<div class="section-inner">
+  <div class="section-tag fade-up">Enrollment</div>
+  <h2 class="section-title fade-up">Take the Full Paid Course</h2>
+  <p class="section-desc fade-up">Choose the learning plan that fits your goals. All plans include WhatsApp support and lifetime access to notes.</p>
+  <div class="plan-grid">
+    <div class="plan-card fade-up">
+      <div class="plan-name">Self-Study</div>
+      <div class="plan-price">Free <span>/ forever</span></div>
+      <div class="plan-desc">Access all notes and examples on this page at your own pace, anytime.</div>
+      <ul class="plan-features">
+        <li>All 8 chapters of detailed notes</li>
+        <li>100+ code examples with output</li>
+        <li>Venn diagrams and visual explanations</li>
+        <li>20+ practice questions per chapter</li>
+        <li>Full solutions included</li>
+      </ul>
+      <a href="#content-ch1" class="plan-btn outline">Start Reading ↑</a>
+    </div>
+    <div class="plan-card featured fade-up">
+      <div class="plan-badge">⭐ Most Popular</div>
+      <div class="plan-name">Group Batch</div>
+      <div class="plan-price">₹2999 <span>/ full course</span></div>
+      <div class="plan-desc">Join a live batch with fellow students. Learn together, grow faster.</div>
+      <ul class="plan-features">
+        <li>Live group sessions with Ram Sir</li>
+        <li>All 8+ chapters covered in depth</li>
+        <li>WhatsApp group for daily doubts</li>
+        <li>Practice assignments & full solutions</li>
+        <li>Interview preparation guidance</li>
+        <li>Certificate of completion</li>
+        <li>Session recordings provided</li>
+      </ul>
+      <a href="https://wa.me/919753528324?text=Hi Ram Sir! I want to enroll in the SQL Group Batch 🙏" class="plan-btn primary" target="_blank"><i class="fab fa-whatsapp"></i> Enroll via WhatsApp</a>
+    </div>
+    <div class="plan-card fade-up">
+      <div class="plan-name">1-on-1 Session</div>
+      <div class="plan-price">₹4999 <span>/ full course</span></div>
+      <div class="plan-desc">Completely personalized sessions tailored to your learning speed and career goals.</div>
+      <ul class="plan-features">
+        <li>Personal live sessions with Ram Sir</li>
+        <li>Flexible timing — your schedule</li>
+        <li>Custom curriculum for your needs</li>
+        <li>Direct WhatsApp: 9753528324</li>
+        <li>Code review & project guidance</li>
+        <li>Mock interviews included</li>
+        <li>Lifetime recording access</li>
+        <li>Job placement assistance</li>
+      </ul>
+      <a href="https://wa.me/919753528324?text=Hi Ram Sir! I want to book a 1-on-1 SQL session 🙏" class="plan-btn primary" target="_blank"><i class="fab fa-whatsapp"></i> Book 1-on-1 Now</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--bg)">
+<div class="section-inner">
+  <div class="section-tag fade-up">Get In Touch</div>
+  <h2 class="section-title fade-up">Send Your Query</h2>
+  <p class="section-desc fade-up" style="max-width:none">Have a question? Want to enroll? Reach out directly — Ram Sir responds personally.</p>
+  <div class="contact-wrap">
+    <div class="whatsapp-big fade-up">
+      <a href="https://wa.me/919753528324" target="_blank">
+        <i class="fab fa-whatsapp" style="font-size:2rem"></i>
+        WhatsApp: 9753528324
+      </a>
+      <p>Message anytime — Ram Sir responds personally. Best for quick doubts, enrollment queries, and 1-on-1 booking.</p>
+    </div>
+    <div class="form-card fade-up">
+      <h3>📩 Send a Detailed Query</h3>
+      <div class="form-group">
+        <label>Your Full Name</label>
+        <input type="text" id="fname" placeholder="e.g. Rahul Sharma">
+      </div>
+      <div class="form-group">
+        <label>Mobile Number</label>
+        <input type="tel" id="fmobile" placeholder="Your WhatsApp number">
+      </div>
+      <div class="form-group">
+        <label>Course Interest</label>
+        <select id="fcourse">
+          <option value="">Select a course</option>
+          <option>SQL — Group Batch (₹999)</option>
+          <option>SQL — 1-on-1 Session (₹1999)</option>
+          <option>Python Programming</option>
+          <option>Web Development</option>
+          <option>Full Stack Development</option>
+          <option>Just have a doubt / question</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Your Message / Question</label>
+        <textarea id="fmsg" placeholder="Write your query, doubt, or question here..."></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitForm()">📤 Send via WhatsApp</button>
+      <div class="form-success" id="formSuccess">
+        <p>✅ Opening WhatsApp with your message...</p>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div class="footer-inner">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">SQL<span>.</span>RamSir</div>
+      <p>Empowering students with industry-ready SQL and programming skills. From database fundamentals to advanced queries — taught with clarity, care, and real-world examples.</p>
+      <div class="social-links">
+        <a class="social-link" href="https://wa.me/919753528324" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a class="social-link" href="https://www.youtube.com/@ramsirdevix" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a class="social-link" href="https://www.linkedin.com/in/ramgopal-prajapati-b30237264/" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a class="social-link" href="https://www.instagram.com/iamramsir" title="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+      <div class="footer-goal">🎯 <strong>Goal:</strong> Making every student job-ready with real-world database skills through clear, practical, concept-first teaching and personal mentoring.</div>
+    </div>
+    <div class="footer-col">
+      <h4>All Chapters</h4>
+      <ul>
+        <li><a href="#content-ch1">Ch 1 — Intro & Databases</a></li>
+        <li><a href="#content-ch2">Ch 2 — Data Types & Constraints</a></li>
+        <li><a href="#content-ch3">Ch 3 — Operators & WHERE</a></li>
+        <li><a href="#content-ch4">Ch 4 — Aggregates & GROUP BY</a></li>
+        <li><a href="#content-ch5">Ch 5 — DML, DDL & DQL</a></li>
+        <li><a href="#content-ch6">Ch 6 — SQL Joins</a></li>
+        <li><a href="#content-ch7">Ch 7 — Subqueries</a></li>
+        <li><a href="#content-ch8">Ch 8 — TCL & DCL</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact & Links</h4>
+      <ul>
+        <li><a href="https://wa.me/919753528324" target="_blank">📱 9753528324 (WhatsApp)</a></li>
+        <li><a href="#why">⭐ Why Choose Ram Sir</a></li>
+        <li><a href="#trainer">👤 About the Trainer</a></li>
+        <li><a href="#course">💎 Course & Fees</a></li>
+        <li><a href="#contact">📩 Send a Query</a></li>
+        <li><a href="https://wa.me/919753528324?text=Hi Ram Sir! I want to enroll 🙏" target="_blank">🎓 Enroll Now</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Master SQL with Ram Sir </p>
+    <p>Made with ❤️ for students who want to truly master SQL</p>
+  </div>
+</div>
+</footer>
+
+<script>
+// Progress bar
+window.addEventListener('scroll',()=>{
+  const s=document.documentElement.scrollTop;
+  const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+  document.getElementById('progress-bar').style.width=(s/h*100)+'%';
+});
+
+// Mobile menu
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open');}
+
+// Copy code
+function copyCode(btn){
+  const pre=btn.closest('.code-wrap').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(()=>{
+    btn.textContent='Copied!';btn.style.color='#22c55e';btn.style.borderColor='#22c55e';
+    setTimeout(()=>{btn.textContent='Copy';btn.style.color='';btn.style.borderColor='';},2000);
+  });
+}
+
+// WhatsApp form
+function submitForm(){
+  const name=document.getElementById('fname').value.trim();
+  const mobile=document.getElementById('fmobile').value.trim();
+  const course=document.getElementById('fcourse').value;
+  const msg=document.getElementById('fmsg').value.trim();
+  if(!name){alert('Please enter your name');return;}
+  if(!mobile){alert('Please enter your mobile number');return;}
+  const text=encodeURIComponent(`Hi Ram Sir! 👋\n\nName: ${name}\nMobile: ${mobile}\nCourse: ${course||'Not selected'}\n\nMessage: ${msg||'I want to know more about your SQL course!'}\n\nSent from Master SQL website`);
+  document.getElementById('formSuccess').style.display='block';
+  setTimeout(()=>{window.open(`https://wa.me/919753528324?text=${text}`,'_blank');},600);
+}
+
+// Fade-up observer
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
+},{threshold:0.08});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+// Chapter progress tracker
+const chapters=[
+  {name:'Intro & Databases',pct:100},
+  {name:'Data Types & Constraints',pct:100},
+  {name:'Operators & WHERE',pct:100},
+  {name:'Aggregates & GROUP BY',pct:100},
+  {name:'DML, DDL & DQL',pct:100},
+  {name:'SQL Joins',pct:100},
+  {name:'Subqueries',pct:100},
+  {name:'TCL & DCL',pct:100},
+];
+
+const grid=document.getElementById('chapterProgress');
+chapters.forEach((ch,i)=>{
+  const d=document.createElement('div');
+  d.className='cp-item';
+  d.innerHTML=`<div class="cp-item-head"><span class="cp-num">CH 0${i+1}</span><span class="cp-pct">${ch.pct}%</span></div><div class="cp-name">${ch.name}</div><div class="cp-bar"><div class="cp-fill" style="width:0%" data-t="${ch.pct}"></div></div>`;
+  d.onclick=()=>document.getElementById('content-ch'+(i+1)).scrollIntoView({behavior:'smooth'});
+  grid.appendChild(d);
+});
+
+const overall=chapters.reduce((a,c)=>a+c.pct,0)/chapters.length;
+document.getElementById('overallPct').textContent=Math.round(overall)+'%';
+
+setTimeout(()=>{
+  document.querySelectorAll('.cp-fill').forEach(el=>{el.style.width=el.dataset.t+'%';});
+  document.getElementById('overallFill').style.width=overall+'%';
+},600);
+</script>
+</body>
+</html>
